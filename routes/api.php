@@ -30,3 +30,5 @@ Route::resource('product', 'ProductController');
 Route::get('/', function () {
     return "abc";
 });
+
+
