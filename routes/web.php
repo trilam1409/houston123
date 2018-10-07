@@ -15,6 +15,3 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-Route::resource('giaovien', 'GiaovienController');
-Route::resource('users', 'UserController');

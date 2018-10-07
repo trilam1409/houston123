@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api;
 
 use Illuminate\Http\Request;
-use DB;
-class UserController extends Controller
+use App\Http\Controllers\Controller;
+use App\Quanly;
+class QuanlyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,8 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = DB::table('USERS')->paginate(30);
-        return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+        $quanly = Quanly::paginate(30);
+        return response()->json($quanly, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 
     /**
@@ -46,8 +47,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = DB::table('USERS')->where('User ID', $id)->first();
-        return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+        $quanly = Quanly::where('Mã Quản Lý',$id)->firstorfail();
+        return response()->json($quanly, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 
     /**

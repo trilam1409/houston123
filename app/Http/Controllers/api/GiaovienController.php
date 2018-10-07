@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
-
+namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Giaovien;
 use DB;
+use App\Http\Controllers\Controller;
+
 class GiaovienController extends Controller
 {
     /**
@@ -15,7 +16,7 @@ class GiaovienController extends Controller
     public function index()
     {
         //
-        $giaovien = DB::table('GIAOVIEN')->paginate(30);
+        $giaovien = Giaovien::paginate(30);
         return response()->json($giaovien, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 
@@ -48,7 +49,7 @@ class GiaovienController extends Controller
      */
     public function show($id)
     {
-        $user = DB::table('GIAOVIEN')->where('Mã Giáo Viên',$id)->first();
+        $user = Giaovien::where('Mã Giáo Viên',$id)->firstorfail();
         return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 
