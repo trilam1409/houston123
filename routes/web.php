@@ -16,3 +16,5 @@ Route::get('/', function () {
 });
 
 
+Route::resource('giaovien', 'GiaovienController');
+Route::resource('users', 'UserController');

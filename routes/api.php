@@ -22,15 +22,11 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('/register', 'UserController@register');
     Route::get('/logout', 'UserController@logout');
    // Route::get('/user', 'UserController@user');
-   Route::get('/show', 'AccountController@show');
 });
 
 
-Route::resource('product', 'ProductController');
 
-Route::get('/', function () {
-    return "abc";
-});
+
 
 
 
