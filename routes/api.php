@@ -21,9 +21,9 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('/login', 'UserController@login');
     Route::post('/register', 'UserController@register');
     Route::get('/logout', 'UserController@logout');
-   // Route::get('/user', 'UserController@user');
+
     Route::resource('giaovien', 'GiaovienController');
-    Route::resource('users', 'UserController');
+    Route::resource('hocvien', 'UserController');
     Route::resource('quanly', 'QuanlyController');
 });
 
