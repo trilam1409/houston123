@@ -3,27 +3,37 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use App\User;
+use App\Account;
 use App\Http\Controllers\Controller;
 use Lcobucci\JWT\Parser;
 use DB;
 
-class UserController extends Controller
+class AccountController extends Controller
 {
     
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'fullname' => 'required|string',
+            'permission' => 'required|string',
+            'khuvuc' => 'required|string',
+            'available' => 'required|number',
+            'hinhanh' => 'required|string',
+            'loaiquanly' => 'string',
+            'loginID' => 'string',
+            'loginPASS' => 'string'
         ]);
-        $user = new User([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
+        $account = new Account([
+            'fullname' => $request->fullname,
+            'permission' => $request->permission,
+            'khuvuc' => $request->khuvuc,
+            'available' => $request->available,
+            'hinhanh' => $request->hinhanh,
+            'loaiquanly' => $request->loaiquanly,
+            'loginID' => $request->loginID,
+            'loginPASS' => bcrypt($request->loginPASS)
         ]);
-        $user->save();
+        $account->save();
         return response()->json([
             'message' => 'Successfully created user!'
         ], 201);
@@ -33,18 +43,18 @@ class UserController extends Controller
 
     public function login(Request $request){
         $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string'
+            'loginID' => 'required|string',
+            'loginPASS' => 'required|string'
         ]);
 
-        $credentials = request(['email', 'password']);
+        $credentials = request(['loginID', 'loginPASS']);
 
         if(!Auth::attempt($credentials)){
             return response()->json(['message' => 'Unauthorizes'], 401);
         }
 
-        $user = Auth::user();
-        $tokenResult = $user->createToken('Houston App')->accessToken;
+        $account = Auth::user();
+        $tokenResult = $account->createToken('Houston App')->accessToken;
         return response()->json(['token' => $tokenResult], 200);
     }
 

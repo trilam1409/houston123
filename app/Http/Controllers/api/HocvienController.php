@@ -4,8 +4,9 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use App\Hocvien;
 
-class UserController extends Controller
+class HocvienController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = DB::table('USERS')->paginate(30);
+        $user = Hocvien::paginate(30);
         return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 
@@ -47,7 +48,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = DB::table('USERS')->where('User ID', $id)->first();
+        $user = Hocvien::where('User ID', $id)->firstorfail();
         return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 

@@ -23,7 +23,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::get('/logout', 'UserController@logout');
    // Route::get('/user', 'UserController@user');
     Route::resource('giaovien', 'GiaovienController');
-    Route::resource('users', 'UserController');
+    Route::resource('hocvien', 'HocvienController');
     Route::resource('quanly', 'QuanlyController');
 });
 
