@@ -14,23 +14,18 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->account();
 });
 
 Route::group(['namespace' => 'api'], function () {
-    Route::post('/login', 'UserController@login');
-    Route::post('/register', 'UserController@register');
-    Route::get('/logout', 'UserController@logout');
-   // Route::get('/user', 'UserController@user');
+    Route::post('/login', 'AccountController@login');
+    Route::post('/register', 'AccountController@register');
+    Route::get('/logout', 'AccountController@logout');
+    Route::get('/account', 'AccountController@account');
     Route::resource('giaovien', 'GiaovienController');
     Route::resource('hocvien', 'HocvienController');
     Route::resource('quanly', 'QuanlyController');
 });
-
-
-
-
-
 
 
 

@@ -15,9 +15,12 @@ class Account extends Authenticatable
      *
      * @var array
      */
+    
     protected $fillable = [
-        'fullname', 'loginPASS',
+        'account_id','fullname','permission', 'khuvuc', 'available', 'hinhanh', 'loaiquanly', 'loginID', 'loginPASS',
     ];
+
+    protected $table = "ACCOUNT";
 
     public $timestamps = false;
 
@@ -26,7 +29,7 @@ class Account extends Authenticatable
      *
      * @var array
      */
-    // protected $hidden = [
-    //     'password', 'remember_token',
-    // ];
+    protected $hidden = [
+        'loginID', 'loginPASS',
+    ];
 }
