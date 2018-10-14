@@ -37,7 +37,18 @@ class HocvienController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'hovaten' => 'required|string',
+            'hinhanh' => 'nulable|string',
+            'lop' => 'required|string',
+            'sdt' => 'nullable|numeric',
+            'diachi' => 'nulable|string',
+            'ngaysinh' => 'nullable|date',
+            'hoclucvao' => 'nullable|string',
+            'ngaynhaphoc' => 'required|date',
+            'truonghocchinh' => 'nullable|string',
+
+        ]);
     }
 
     /**

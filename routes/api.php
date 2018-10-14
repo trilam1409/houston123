@@ -18,14 +18,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['namespace' => 'api'], function () {
-    Route::post('/login', 'AccountController@login');
-    Route::post('/register', 'AccountController@register');
-    Route::get('/logout', 'AccountController@logout');
-    Route::get('/account', 'AccountController@account');
+    Route::post('login', 'AccountController@login');
+    Route::post('register', 'AccountController@register');
+    Route::post('register_info', 'AccountController@register_info');
+    Route::get('logout', 'AccountController@logout');
+    Route::get('account', 'AccountController@account');
+    
+    Route::get('simple', 'AccountController@test');
     Route::resource('giaovien', 'GiaovienController');
     Route::resource('hocvien', 'HocvienController');
     Route::resource('quanly', 'QuanlyController');
+    Route::resource('coso', 'CosoController');
 });
+
 
 
 

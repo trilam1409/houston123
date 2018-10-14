@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Quanly;
+use App\Account;
 class QuanlyController extends Controller
 {
     /**
@@ -45,9 +46,9 @@ class QuanlyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($str)
     {
-        $quanly = Quanly::where('Mã Quản Lý',$id)->firstorfail();
+       $quanly = Quanly::where('Mã Quản Lý',$str)->orWhere('Họ Và Tên','like','%'.$str.'%')->get();
         return response()->json($quanly, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
     }
 
@@ -69,9 +70,38 @@ class QuanlyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'hovaten' => 'nullable|string',
+            'hinhanh' => 'nullable|string',
+            'permission' => 'string',
+            'available' => 'numeric',
+            'sdt' => 'nullable|numeric',
+            'diachi' => 'nullable|string',
+            'email' => 'nullable|email',
+            'cmnd' => 'numeric',
+            'chucvu' => 'nullable|string',
+            'ngaynghi' => 'nullable|date',
+            'lydonghi' => 'nullable|string',
+            'coso' => 'nullable|string'
+        ]);
+
+        if(Quanly::where('Mã Quản Lý',$id)->count() == 1){
+            Quanly::where('Mã Quản Lý',$id)->update(['Họ Và Tên' => $request->hovaten, 'Hình Ảnh' => $request->hinhanh, 'Số Điện Thoại' => $request->sdt,
+        'Địa Chỉ' => $request->diachi, 'email' => $request->email, 'CMND' => $request->cmnd, 'Chức Vụ' => $request->chucvu, 'Ngày Nghỉ' => $request->ngaynghi,
+        'Lý Do Nghỉ' => $request->lydonghi, 'Cơ Sở' => $request->coso]);
+        
+        Account::where('account_id',$id)->update(['fullname' => $request->hovaten,'permission' => $request->permission, 'khuvuc' => $request->coso,
+         'available' => $request->available, 'hinhanh' => $request->hinhanh, 'loaiquanly' => $request->chucvu]);
+        return response()->json(['message' => 'Account updated sccessfully'], 200);
+
+        } else {
+            return response()->json(['message' => 'Account not exists'], 200);
+        }
+
+       
     }
 
     /**
@@ -81,7 +111,15 @@ class QuanlyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
+    {   
+        $exist = Quanly::where('Mã Quản Lý',$id)->count();
+        if($exist == 0){
+            return response()->json(['message' => "Account not exist"], 200);
+        } else if ($exist == 1){
+            Quanly::where('Mã Quản Lý',$id)->delete();
+            Account::where('account_id', $id)->delete();
+            return response()->json(['message' => "Account deleted successfully"], 200);
+        }
+
     }
 }

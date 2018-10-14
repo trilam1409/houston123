@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Giaovien;
+use App\Account;
 use DB;
 use App\Http\Controllers\Controller;
 
@@ -73,7 +74,32 @@ class GiaovienController extends Controller
      */
     public function update(Request $request, $id)
     {
-     
+        $request->validate([
+            'hovaten' => 'nullable|string',
+            'hinhanh' => 'nullable|string',
+            'permission' => 'string',
+            'available' => 'numeric',
+            'sdt' => 'nullable|numeric',
+            'diachi' => 'nullable|string',
+            'email' => 'nullable|email',
+            'cmnd' => 'numeric',
+            'ngaynghi' => 'nullable|date',
+            'lydonghi' => 'nullable|string',
+            'coso' => 'nullable|string'
+        ]);
+
+        if(Giaovien::where('Mã Giáo Viên',$id)->count() == 1){
+            Giaovien::where('Mã Giáo Viên',$id)->update(['Họ Và Tên' => $request->hovaten, 'Hình Ảnh' => $request->hinhanh, 'Số Điện Thoại' => $request->sdt,
+        'Địa Chỉ' => $request->diachi, 'email' => $request->email, 'CMND' => $request->cmnd, 'Ngày Nghỉ' => $request->ngaynghi,
+        'Lý Do Nghỉ' => $request->lydonghi, 'Cơ Sở' => $request->coso]);
+        Account::where('account_id',$id)->update(['fullname' => $request->hovaten,'permission' => $request->permission, 'khuvuc' => $request->coso,
+         'available' => $request->available, 'hinhanh' => $request->hinhanh]);
+        return response()->json(['message' => 'Account updated sccessfully']);
+        } else {
+            return response()->json(['message' => 'Account not exists']);
+        }
+
+        
     }
 
     /**
@@ -84,6 +110,12 @@ class GiaovienController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $exist = Giaovien::where('Mã Giáo Viên',$id)->count();
+        if($exist == 0){
+            return response()->json(['message' => "Account not exist"], 200);
+        } else if ($exist == 1){
+            Giaovien::where('Mã Giáo Viên',$id)->delete();
+            return response()->json(['message' => "Account deleted successfully"], 200);
+        }
     }
 }
