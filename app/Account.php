@@ -20,7 +20,7 @@ class Account extends Authenticatable
         'account_id','fullname','permission', 'khuvuc', 'available', 'hinhanh', 'loaiquanly', 'loginID', 'loginPASS',
     ];
 
-    protected $table = "ACCOUNT";
+    protected $table = "account";
 
     public $timestamps = false;
 

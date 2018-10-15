@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Giaovien extends Model
 {
-    protected $table = "GIAOVIEN";
+    protected $table = "giaovien";
 
     protected $fillable =[
         'Mã Giáo Viên', 'Họ Và Tên', 'Hình Ảnh', 'Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND', 'Cơ Sở',
