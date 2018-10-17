@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Account;
 use App\Quanly;
 use App\Giaovien;
+use App\Hocvien;
 use App\Http\Controllers\Controller;
 use Lcobucci\JWT\Parser;
 use Illuminate\Support\Facades\Hash;
@@ -31,30 +32,34 @@ class AccountController extends Controller
             $account_id = 'QL';
         }
 
+        if(Account::where('loginID',$request->loginId)->count() == 0){
+            $acount_id_max = Account::select('account_id')->where('account_id','like', ''.$account_id.'%')->max('account_id');
+            $account_id_new = str_pad(substr($acount_id_max,-4) + 1,'6',''.$account_id.'0000', STR_PAD_LEFT);
+            $account = new Account([
+                'account_id' => $account_id_new,
+                'fullname' => $request->fullname,
+                'permission' => $request->permission,
+                'khuvuc' => $request->khuvuc,
+                'loginID' => $request->loginID,
+                'loginPASS' => bcrypt($request->loginPASS)
+            ]);
 
-        $acount_id_max = Account::select('account_id')->where('account_id','like', ''.$account_id.'%')->max('account_id');
-        $account_id_new = str_pad(substr($acount_id_max,-4) + 1,'6',''.$account_id.'0000', STR_PAD_LEFT);
-        $account = new Account([
-            'account_id' => $account_id_new,
-            'fullname' => $request->fullname,
-            'permission' => $request->permission,
-            'khuvuc' => $request->khuvuc,
-            'loginID' => $request->loginID,
-            'loginPASS' => bcrypt($request->loginPASS)
-        ]);
-
-        $account->save();
-        $detail = Account::where('account_id',$account_id_new)->first();
-        return response()->json(array('message' => 'Account created successfuly', 'account_id' => $detail->account_id), 200);
+            $account->save();
+            $detail = Account::where('account_id',$account_id_new)->first();
+            return response()->json(array('code' => '1', 'account_id' => $detail->account_id), 200);
+        } else {
+            return response()->json(['code' => '0'], 200);
+        }
+        
     }
 
     public function register_info(Request $request){
         $request->validate([
             'account_id' => 'required|string',
-            'Mã Quản Lý' => 'unuique:quanly',
+            'Mã Quản Lý' => 'unique:quanly',
             'available' => 'numeric',
-            'hinhanh' => 'required|string',
-            //'loaiquanly' => 'string',
+            'hinhanh' => 'string',
+            'loaiquanly' => 'string',
             'sdt' => 'required|string',
             'diachi' => 'required|string',
             'email' => 'email',
@@ -62,9 +67,9 @@ class AccountController extends Controller
         ]);
 
         if(QuanLy::where('Mã Quản Lý',$request->account_id)->count() >0){
-            return response()->json(['message' => 'Account exsited'], 201);
+            return response()->json(['message' => 'Account exsisted'], 201);
         } else  if(Giaovien::where('Mã Giáo Viên',$request->account_id)->count() >0){
-            return response()->json(['message' => 'Account exsited'], 201);
+            return response()->json(['message' => 'Account exsisted'], 201);
         } 
 
         $detail = Account::where('account_id',$request->account_id)->first();
@@ -144,14 +149,25 @@ class AccountController extends Controller
         $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
         if($account_token->revoked == 0){
             $account = Account::where('account_id',$account_token->user_id)->first();
-            return response()->json($account, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+            if( Giaovien::where('Mã Giáo Viên', $account_token->user_id)->count() == 1){
+                $giaovien = Giaovien::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND','Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Giáo Viên', $account_token->user_id)->first();
+                return response()->json(array([$account , $giaovien]), 200)->header('charset','utf-8');
+            } else if (Quanly::where('Mã Quản Lý', $account_token->user_id)->count() == 1){
+                $quanly = Quanly::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND', 'Chức Vụ', 'Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Quản Lý', $account_token->user_id)->first();
+                return response()->json(array([$account , $quanly]), 200)->header('charset','utf-8');
+            } 
+
+            //return response()->json(array([$account]), 200)->header('charset','utf-8');
         } else{
             return response()->json(['message' => 'The access token provided is expired'], 401);
         }
     }
     
     public function test(){
-        Quanly::where('Mã Quản Lý', 'QL0146')->update(['Hình Ảnh' => '123.png']);
-        return response()->json(['message' => 'abc'],200);
+        $id = Hocvien::min('Lớp');
+        echo $id . ' ';
+        // $id_new = str_pad(substr($id, -5) + 1, '7', 'HT00000', STR_PAD_LEFT);
+        // echo $id_new;
+
     }
 }

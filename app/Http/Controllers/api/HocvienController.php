@@ -16,7 +16,7 @@ class HocvienController extends Controller
     public function index()
     {
         $user = Hocvien::paginate(30);
-        return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+        return response()->json($user, 200)->header('charset','utf-8');
     }
 
     /**
@@ -45,10 +45,47 @@ class HocvienController extends Controller
             'diachi' => 'nulable|string',
             'ngaysinh' => 'nullable|date',
             'hoclucvao' => 'nullable|string',
-            'ngaynhaphoc' => 'required|date',
+            'ngaynhaphoc' => 'date',
             'truonghocchinh' => 'nullable|string',
-
+            'hohang' => 'string',
+            'tenNT1' => 'string',
+            'ngheNT1' => 'string',
+            'sdtNT1' => 'numeric',
+            'tenNT2' => 'string',
+            'ngheNT2' => 'string',
+            'sdtNT2' => 'numeric',
+            'lydobietHouson' => 'string',
+            'chinhthuc' => 'numeric',
+            'coso' => 'required|string'
         ]);
+
+        $id = Hocvien::max('User ID');
+        $id_new = str_pad(substr($id, -5) + 1, '7', 'HT00000', STR_PAD_LEFT);
+        $hocvien = new Hocvien ([
+            'User ID' => $id_new,
+            'Họ Và Tên' => $request->hovaten,
+            'Hình Ảnh' => $request->hinhanh,
+            'Lớp' => $request->lop,
+            'Số Điện Thoại' => $request->sdt,
+            'Địa Chỉ' => $request->diachi,
+            'Ngày Sinh' => $request->ngaysinh,
+            'Học Lực Đầu Vào' => $request->hoclucvao,
+            'Ngày Nhập Học' => $request->ngaynhaphoc,
+            'Trường Học Chính Khóa' => $request->truonghocchinh,
+            'Họ Hàng' => $request->hohang,
+            'Họ Và Tên (NT1)' => $request->tenNT1,
+            'Số Điện Thoại (NT1)' => $request->sdtNT1,
+            'Nghê Nghiệp (NT1)' => $request->ngeNT1,
+            'Họ Và Tên (NT2)' => $request->tenNT2,
+            'Số Điện Thoại (NT2)' => $request->sdtNT2,
+            'Nghê Nghiệp (NT2)' => $request->ngeNT2,
+            'Biết Houston123 Như Thế Nào' => $request->lydobietHouson,
+            'Chính Thức' => $request->chinhthuc,
+            'Cơ Sở' => $request->coso
+        ]);
+
+        $hocvien->save();
+        return response()->json('1', 200);
     }
 
     /**
@@ -57,10 +94,10 @@ class HocvienController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        $user = Hocvien::where('User ID', $id)->firstorfail();
-        return response()->json($user, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+    public function show($str)
+    {   
+        $user = Hocvien::where('User ID','like','%'.$str.'%')->orwhere('Họ Và Tên', 'like','%'.$str.'%')->get();
+        return response()->json($user, 200)->header('charset','utf-8');
     }
 
     /**
@@ -94,6 +131,12 @@ class HocvienController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(Hocvien::where('User ID', $id)->count() == 1){
+            Hocvien::where('User ID', $id)->delete();
+            return response()->json(['code', '1'],200);
+        } else {
+            return response()->json(['code', '0'],200);
+        }
+        
     }
 }

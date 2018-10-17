@@ -115,6 +115,7 @@ class GiaovienController extends Controller
             return response()->json(['message' => "Account not exist"], 200);
         } else if ($exist == 1){
             Giaovien::where('Mã Giáo Viên',$id)->delete();
+            Account::where('account_id', $id)->delete();
             return response()->json(['message' => "Account deleted successfully"], 200);
         }
     }

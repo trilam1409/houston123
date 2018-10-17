@@ -15,7 +15,7 @@ class CosoController extends Controller
     public function index()
     {
         $coso = Coso::paginate(15);
-        return response()->json($coso,200);
+        return response()->json($coso, 200)->header('charset', 'utf-8');
     }
 
     /**

@@ -23,7 +23,10 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('register_info', 'AccountController@register_info');
     Route::get('logout', 'AccountController@logout');
     Route::get('account', 'AccountController@account');
-    
+    Route::resource('loaiql', 'LoaiquanlyController');
+    Route::resource('truong-tiem-nang', 'TruongtiemnangController');
+
+
     Route::get('simple', 'AccountController@test');
     Route::resource('giaovien', 'GiaovienController');
     Route::resource('hocvien', 'HocvienController');
