@@ -15,6 +15,6 @@ class Giaovien extends Model
     public $timestamps = false;
 
     protected $hidden = [
-        'STT', 'Mã Giáo Viên',
+        'STT',
     ];
 }

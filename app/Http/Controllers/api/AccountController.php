@@ -146,21 +146,26 @@ class AccountController extends Controller
     public function account(Request $request){
         $value = $request->bearerToken();
         $id = (new Parser())->parse($value)->getHeader('jti');
-        $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
-        if($account_token->revoked == 0){
-            $account = Account::where('account_id',$account_token->user_id)->first();
-            if( Giaovien::where('Mã Giáo Viên', $account_token->user_id)->count() == 1){
-                $giaovien = Giaovien::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND','Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Giáo Viên', $account_token->user_id)->first();
-                return response()->json(array([$account , $giaovien]), 200)->header('charset','utf-8');
-            } else if (Quanly::where('Mã Quản Lý', $account_token->user_id)->count() == 1){
-                $quanly = Quanly::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND', 'Chức Vụ', 'Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Quản Lý', $account_token->user_id)->first();
-                return response()->json(array([$account , $quanly]), 200)->header('charset','utf-8');
-            } 
-
-            //return response()->json(array([$account]), 200)->header('charset','utf-8');
-        } else{
-            return response()->json(['message' => 'The access token provided is expired'], 401);
+        if(DB::table('oauth_access_tokens')->where('id',$id)->count() == 1){
+            $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
+            if($account_token->revoked == 0){
+                $account = Account::where('account_id',$account_token->user_id)->first();
+                if( Giaovien::where('Mã Giáo Viên', $account_token->user_id)->count() == 1){
+                    $giaovien = Giaovien::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND','Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Giáo Viên', $account_token->user_id)->first();
+                    return response()->json(array([$account , $giaovien]), 200)->header('charset','utf-8');
+                } else if (Quanly::where('Mã Quản Lý', $account_token->user_id)->count() == 1){
+                    $quanly = Quanly::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND', 'Chức Vụ', 'Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Quản Lý', $account_token->user_id)->first();
+                    return response()->json(array([$account , $quanly]), 200)->header('charset','utf-8');
+                } 
+    
+                //return response()->json(array([$account]), 200)->header('charset','utf-8');
+            } else{
+                return response()->json(['message' => 'The access token provided is expired'], 401);
+            }
+        } else {
+            return response()->json(['message' => 'The access token not exsist'], 401);
         }
+       
     }
     
     public function test(){
