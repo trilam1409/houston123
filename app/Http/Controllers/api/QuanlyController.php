@@ -16,7 +16,7 @@ class QuanlyController extends Controller
     public function index()
     {
         $quanly = Quanly::paginate(30);
-        return response()->json($quanly, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+        return response()->json(['code' => '200', 'quanly' => $quanly], 200)->header('charset', 'utf-8');
     }
 
     /**
@@ -48,8 +48,13 @@ class QuanlyController extends Controller
      */
     public function show($str)
     {
-       $quanly = Quanly::where('Mã Quản Lý',$str)->orWhere('Họ Và Tên','like','%'.$str.'%')->get();
-        return response()->json($quanly, 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
+       $quanly = Quanly::where('Mã Quản Lý','like','%'.$str.'%')->orWhere('Họ Và Tên','like','%'.$str.'%')->orWhere('Cơ Sở','like','%'.$str.'%')->get();
+       $count = $quanly->count();
+       if($count == 0){
+           return response()->json(['code' => '401', 'message' => 'Khong tim thay'],401);
+       } else{
+        return response()->json(['code' => '200', 'quantity' => $count, 'quanly' => $quanly], 200)->header('charset', 'utf-8');
+       }
     }
 
     /**
@@ -114,11 +119,11 @@ class QuanlyController extends Controller
     {   
         $exist = Quanly::where('Mã Quản Lý',$id)->count();
         if($exist == 0){
-            return response()->json(['message' => "Account not exist"], 200);
+            return response()->json(['code' => '401', 'message' => "Tai khoan khong ton tai"], 401);
         } else if ($exist == 1){
-            Quanly::where('Mã Quản Lý',$id)->delete();
-            Account::where('account_id', $id)->delete();
-            return response()->json(['message' => "Account deleted successfully"], 200);
+            // Quanly::where('Mã Quản Lý',$id)->delete();
+            // Account::where('account_id', $id)->delete();
+            return response()->json(['code' => '200', 'message' => "Tai khoan da duoc xoa"], 200);
         }
 
     }

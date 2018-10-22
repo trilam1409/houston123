@@ -121,10 +121,10 @@ class AccountController extends Controller
         $pass_verify = Account::select('loginPASS')->where('loginID', $request->loginID)->first();
         if (!is_null($pass_verify)){
             if (!Hash::check($request->loginPASS, $pass_verify->loginPASS)) {
-                return response()->json(['message' => 'Unauthorized'], 401);
+                return response()->json(['code' => '400', 'message' => 'Dang nhap that bai'], 400);
             }
         } else{
-            return response()->json(['message' => "Account doesn't exist"], 401);
+            return response()->json(['code' => '401','message' => "Tai khoan khong ton tai"], 401);
         }
 
         $account = Account::where('loginID', $request->loginID)->first();
@@ -132,15 +132,14 @@ class AccountController extends Controller
         $tokenResult = $account->createToken('Houston App')->accessToken;
         $id = (new Parser())->parse($tokenResult)->getHeader('jti');
         DB::table('oauth_access_tokens')->where('id', $id)->update(['user_id' => $account_id->account_id]);
-        return response()->json(['token' => $tokenResult], 200);
+        return response()->json(['code' => '200', 'token' => $tokenResult], 200);
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request){   
         $value = $request->bearerToken();
         $id = (new Parser())->parse($value)->getHeader('jti');
         DB::table('oauth_access_tokens')->where('id', $id)->update(['revoked' => true]);
-        //DB::table('oauth_access_tokens')->where('id', $id)->delete();
-        return response()->json(['message' => "Loged out"]);
+        return response()->json(['code' => '200', 'message' => "Dang xuat thanh cong"], 200);
     }
 
     public function account(Request $request){
@@ -157,13 +156,11 @@ class AccountController extends Controller
                     $quanly = Quanly::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND', 'Chức Vụ', 'Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Quản Lý', $account_token->user_id)->first();
                     return response()->json(array([$account , $quanly]), 200)->header('charset','utf-8');
                 } 
-    
-                //return response()->json(array([$account]), 200)->header('charset','utf-8');
             } else{
-                return response()->json(['message' => 'The access token provided is expired'], 401);
+                return response()->json(['code' => '401', 'message' => 'Chuoi token da het han'], 401);
             }
         } else {
-            return response()->json(['message' => 'The access token not exsist'], 401);
+            return response()->json(['code' => '401', 'message' => 'Chuoi token khong ton tai'], 401);
         }
        
     }
