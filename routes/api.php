@@ -25,7 +25,8 @@ Route::group(['namespace' => 'api'], function () {
     Route::get('account', 'AccountController@account');
     Route::resource('loaiql', 'LoaiquanlyController');
     Route::resource('truong-tiem-nang', 'TruongtiemnangController');
-
+    Route::resource('monhoc', 'MonhocController');
+    Route::resource('lophoc', 'LophocController');
 
     Route::get('simple', 'AccountController@test');
     Route::resource('giaovien', 'GiaovienController');

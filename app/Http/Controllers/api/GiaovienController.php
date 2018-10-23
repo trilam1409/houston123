@@ -104,7 +104,7 @@ class GiaovienController extends Controller
                 'available' => $request->available, 'hinhanh' => $request->hinhanh]);
         return response()->json(['code' => '200', 'message' => 'Tai khoan cap nhat thanh cong']);
         } else {
-            return response()->json(['code' => '401', 'message' => 'Tai khoan khon ton tai'], 401);
+            return response()->json(['code' => '401', 'message' => 'Tai khoan khong ton tai'], 401);
         }
 
         
