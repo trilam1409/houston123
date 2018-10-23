@@ -136,7 +136,9 @@ class LophocController extends Controller
         if (Lophoc::where('Mã Lớp', $id)->count() == 0 ){
             return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
         } else {
-            Lophoc::where('Mã Lớp', $id)->update(['Lớp' => $request->lop, 'Mã Môn Học' => $request->mamonhoc, 'Mã Giáo Viên' => $request->magiaovien, 'Ngày Bắt Đầu' => date("Y-m-d", strtotime($request->batdau)), 'Ngày Kết Thúc' => date("Y-m-d", strtotime($request->ketthuc)), 'branch' => $request->coso]);
+            Lophoc::where('Mã Lớp', $id)->update(['Lớp' => $request->lop, 'Mã Môn Học' => $request->mamonhoc, 'Mã Giáo Viên' => $request->magiaovien, 
+            'Ngày Bắt Đầu' => date("Y-m-d", strtotime($request->batdau)), 'Ngày Kết Thúc' => date("Y-m-d", strtotime($request->ketthuc)), 
+            'branch' => $request->coso]);
             return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
         }
         
