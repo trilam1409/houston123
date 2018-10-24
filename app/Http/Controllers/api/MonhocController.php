@@ -15,7 +15,7 @@ class MonhocController extends Controller
     public function index()
     {   
         if (Monhoc::get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddate' => null], 401);
+            return response()->json(['code' => '401', 'embeddata' => null], 401);
         } else {
             $monhoc = Monhoc::paginate(15);
             return response()->json(['code' => '200', 'embeddata' => $monhoc], 200)->header('charset','utf-8');
@@ -71,7 +71,7 @@ class MonhocController extends Controller
     {   
         $monhoc = Monhoc::where('mamon','like','%'.$str.'%')->orwhere('name','like','%'.$str.'%')->orwhere('managerAllow','like','%'.$str.'%');
         if ($monhoc->get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddate' => null], 401);
+            return response()->json(['code' => '401', 'embeddata' => null], 401);
         } else {
             $monhoc = $monhoc->paginate(15);
             return response()->json(['code' => '200', 'embeddata' => $monhoc], 200)->header('charset','utf-8');

@@ -58,7 +58,7 @@ class QuanlyController extends Controller
        $quanly = Quanly::where('Mã Quản Lý','like','%'.$str.'%')->orWhere('Họ Và Tên','like','%'.$str.'%')->orWhere('quanly.Cơ Sở','like','%'.$str.'%');
   
        if($quanly->get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddate' => null],401);
+            return response()->json(['code' => '401', 'embeddata' => null],401);
        } else{
             $result = $quanly->join('coso', 'quanly.Cơ Sở', '=', 'coso.Cơ Sở')->select('quanly.*', 'coso.Tên Cơ Sở')->paginate(15);
             return response()->json(['code' => '200', 'embeddata' => $result], 200)->header('charset', 'utf-8');

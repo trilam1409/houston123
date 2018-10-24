@@ -19,6 +19,7 @@ class DKmonhocController extends Controller
             return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 200);
         } else {
             $dk = DKmonhoc::paginate(15);
+            
             return response()->json(['code' => '200', 'embeddata' => $dk])->header('charset' , 'utf-8');
         }
     }
@@ -30,7 +31,7 @@ class DKmonhocController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -41,7 +42,38 @@ class DKmonhocController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'mahocvien' => 'required|max:10',
+            'monhoc1' => 'required|string',
+            'monhoc2' => 'string',
+            'monhoc3' => 'string',
+            'sl1' => 'required|string',
+            'sl2' => 'string',
+            'sl3' => 'string',
+            'ngaydangky' => 'required|date'
+        ]);
+
+        // $monhoc = array(array('mamon' => $request->monhoc[1]),
+        //                 array('mamon'=> $request->monhoc[2])
+        //                 //array('mamon'=> $request->monhoc3)
+        //             );
+        $monhoc = array();
+        for ($i = 1; $i <=3; $i++){
+            if($request->{"monhoc$i"} != null){
+                array_push($monhoc,array('mamon' => $request->{"monhoc$i"},'soluong' => $request->{"sl$i"}));
+            }
+        }
+
+        printf(json_encode($monhoc));
+
+        // $dangky = new DKmonhoc([
+        //     'User ID' => $request->mahocvien,
+        //     'monhoc' => json_encode($monhoc),
+        //     'ngaydangky' => $request->ngaydangky
+        // ]);
+
+        // $dangky->save();
+        // return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
     }
 
     /**
@@ -52,7 +84,9 @@ class DKmonhocController extends Controller
      */
     public function show($id)
     {
-        //
+        $dk = DKmonhoc::where('monhoc', 'like','%'.$id.'%')->paginate(15);
+ 
+        return response()->json(['code' => '200', 'embeddata' => $dk])->header('charset' , 'utf-8');
     }
 
     /**
@@ -86,6 +120,6 @@ class DKmonhocController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DKmonhoc::where('ID',$id)->delete();
     }
 }

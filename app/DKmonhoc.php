@@ -8,11 +8,9 @@ class DKmonhoc extends Model
 {
     protected $table = 'dangkimonhoc';
     protected $fillable = [
-        'USER ID', 'monhoc', 'ngaydangky'
+        'User ID', 'monhoc', 'ngaydangky'
     ];
 
     public $timestamps = false;
-    protected $hidden = [
-        'ID'
-    ];
+   
 }
