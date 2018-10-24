@@ -46,9 +46,9 @@ class AccountController extends Controller
 
             $account->save();
             $detail = Account::where('account_id',$account_id_new)->first();
-            return response()->json(array('code' => '1', 'account_id' => $detail->account_id), 200);
+            return response()->json(array('code' => '200', 'account_id' => $detail->account_id));
         } else {
-            return response()->json(['code' => '0'], 200);
+            return response()->json(['code' => '422', 'message' => 'ID chi dinh da duoc su dung']);
         }
         
     }
@@ -67,9 +67,9 @@ class AccountController extends Controller
         ]);
 
         if(QuanLy::where('Mã Quản Lý',$request->account_id)->count() >0){
-            return response()->json(['message' => 'Account exsisted'], 201);
+            return response()->json(['code' => '422', 'message' => 'Tai khoan da ton tai']);
         } else  if(Giaovien::where('Mã Giáo Viên',$request->account_id)->count() >0){
-            return response()->json(['message' => 'Account exsisted'], 201);
+            return response()->json(['code' => '422', 'message' => 'Tai khoan da ton tai']);
         } 
 
         $detail = Account::where('account_id',$request->account_id)->first();
@@ -90,7 +90,7 @@ class AccountController extends Controller
             $quanly->save();
             $account = Account::where('account_id',$request->account_id)->update(['available' => $request->available, 'hinhanh' => $request->hinhanh,
          'loaiquanly' => $request->loaiquanly]);
-        return response()->json(['message' => 'Account quanly created successfully'], 200);
+        return response()->json(['code' => '200', 'message' => 'QL tao thanh cong']);
         } else if ($type == 'GV'){
             $giaovien = new Giaovien([
                 'Mã Giáo Viên' => $request->account_id,
@@ -106,9 +106,9 @@ class AccountController extends Controller
             $giaovien->save();
             $account = Account::where('account_id',$request->account_id)->update(['available' => $request->available, 'hinhanh' => $request->hinhanh,
          'loaiquanly' => $request->loaiquanly]);
-        return response()->json(['message' => 'Account giaovien created successfully'], 200);
+        return response()->json(['code' => '200', 'message' => 'GV tao thanh cong']);
         } else{
-            return response()->json(['message' => 'Error'],201);
+            return response()->json(['code' => '400', 'message' => 'Error']);
         }
 
     }
@@ -121,10 +121,10 @@ class AccountController extends Controller
         $pass_verify = Account::select('loginPASS')->where('loginID', $request->loginID)->first();
         if (!is_null($pass_verify)){
             if (!Hash::check($request->loginPASS, $pass_verify->loginPASS)) {
-                return response()->json(['code' => '400', 'message' => 'Dang nhap that bai'], 400);
+                return response()->json(['code' => '400', 'message' => 'Dang nhap that bai']);
             }
         } else{
-            return response()->json(['code' => '401','message' => "Tai khoan khong ton tai"], 401);
+            return response()->json(['code' => '401','message' => "Tai khoan khong ton tai"]);
         }
 
         $account = Account::where('loginID', $request->loginID)->first();
@@ -132,14 +132,14 @@ class AccountController extends Controller
         $tokenResult = $account->createToken('Houston App')->accessToken;
         $id = (new Parser())->parse($tokenResult)->getHeader('jti');
         DB::table('oauth_access_tokens')->where('id', $id)->update(['user_id' => $account_id->account_id]);
-        return response()->json(['code' => '200', 'token' => $tokenResult], 200);
+        return response()->json(['code' => '200', 'token' => $tokenResult]);
     }
 
     public function logout(Request $request){   
         $value = $request->bearerToken();
         $id = (new Parser())->parse($value)->getHeader('jti');
         DB::table('oauth_access_tokens')->where('id', $id)->update(['revoked' => true]);
-        return response()->json(['code' => '200', 'message' => "Dang xuat thanh cong"], 200);
+        return response()->json(['code' => '200', 'message' => "Dang xuat thanh cong"]);
     }
 
     public function account(Request $request){

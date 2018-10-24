@@ -16,18 +16,14 @@ class LophocController extends Controller
     public function index()
     {   
         if (Lophoc::get()->count() == 0){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => '401', 'embeddata' => null], 401);
         } else {
             $lophoc = Lophoc::join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
             ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
             ->select('Mã Lớp', 'Lớp', 'lophoc.Mã Môn Học', 'danhsachmonhoc.name', 'lophoc.Mã Giáo Viên', 'giaovien.Họ Và Tên', 
             'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'lophoc' => $lophoc])->header('charset','utf-8');
-        }
- 
-
-        echo $ma_lop;
-        
+            return response()->json(['code' => '200', 'embeddata' => $lophoc])->header('charset','utf-8');
+        }     
     }
 
     /**
@@ -63,8 +59,6 @@ class LophocController extends Controller
             $max = Lophoc::max('Mã Lớp');
             $ma_lop = str_pad(substr($max, -3) + 1, '5', 'LH000', STR_PAD_LEFT);
         }
-
-      
         $lophoc = new Lophoc([
             'Mã Lớp' => $ma_lop,
             'Lớp' => $request->lop,
@@ -98,9 +92,9 @@ class LophocController extends Controller
         'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
      
         if ($lophoc->count() == 0){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => '401', 'embeddata' => null], 401);
         } else {
-            return response()->json(['code' => '200', 'lophoc' => $result])->header('charset','utf-8');
+            return response()->json(['code' => '200', 'embeddata' => $result])->header('charset','utf-8');
         }
     }
 
@@ -154,11 +148,12 @@ class LophocController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        if (Lophoc::where('Mã Lớp', $id)->count() == 0){
+    {   
+        $lophoc = Lophoc::where('Mã Lớp', $id);
+        if ($lophoc->count() == 0){
             return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
         } else {
-            Lophoc::where('Mã Lớp', $id)->delete();
+            $lophoc->delete();
             return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
         }
     }

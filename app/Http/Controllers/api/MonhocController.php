@@ -13,9 +13,14 @@ class MonhocController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $monhoc = Monhoc::paginate(15);
-        return response()->json(['code' => '200', 'monhoc' => $monhoc], 200)->header('charset','utf-8');
+    {   
+        if (Monhoc::get()->count() == 0) {
+            return response()->json(['code' => '401', 'embeddate' => null], 401);
+        } else {
+            $monhoc = Monhoc::paginate(15);
+            return response()->json(['code' => '200', 'embeddata' => $monhoc], 200)->header('charset','utf-8');
+        }
+        
     }
 
     /**
@@ -36,7 +41,24 @@ class MonhocController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'ma' => 'required|max:3',
+            'ten' => 'required',
+            'bophanquanly' => 'required'
+        ]);
+
+        if (Monhoc::where('mamon',$request->ma)->get()->count() == 0){
+            $monhoc = new Monhoc([
+                'mamon' => $request->ma,
+                'name' => $request->ten,
+                'managerAllow' => $request->bophanquanly
+            ]);
+
+            $monhoc->save();
+            return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+        } else {
+            return response()->json(['code' => '422', 'message' => 'Da ton tai'], 422);
+        }
     }
 
     /**
@@ -45,9 +67,15 @@ class MonhocController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-        //
+    public function show($str)
+    {   
+        $monhoc = Monhoc::where('mamon','like','%'.$str.'%')->orwhere('name','like','%'.$str.'%')->orwhere('managerAllow','like','%'.$str.'%');
+        if ($monhoc->get()->count() == 0) {
+            return response()->json(['code' => '401', 'embeddate' => null], 401);
+        } else {
+            $monhoc = $monhoc->paginate(15);
+            return response()->json(['code' => '200', 'embeddata' => $monhoc], 200)->header('charset','utf-8');
+        }
     }
 
     /**
@@ -70,7 +98,17 @@ class MonhocController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'ten' => 'required',
+            'bophanquanly' => 'required'
+        ]);
+        $monhoc = Monhoc::where('mamon',$id);
+        if ($monhoc->get()->count() == 1){
+            $monhoc->update(['name' => $request->ten,'managerAllow' => $request->bophanquanly]);
+            return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+        } else {
+            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+        }
     }
 
     /**
@@ -81,6 +119,12 @@ class MonhocController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $monhoc = Monhoc::where('mamon',$id);
+        if ($monhoc->get()->count() == 1){
+            $monhoc->delete();
+            return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
+        } else {
+            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+        }
     }
 }

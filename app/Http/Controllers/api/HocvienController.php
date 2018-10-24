@@ -14,9 +14,14 @@ class HocvienController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $user = Hocvien::paginate(30);
-        return response()->json($user, 200)->header('charset','utf-8');
+    {   
+        if (Hocvien::get()->count() == 0) {
+            return response()->json(['code' => '401', 'embeddata' => null], 401);
+        } else {
+            $user = Hocvien::join('coso', 'users.Cơ Sở', '=', 'coso.Cơ Sở')->select('users.*', 'coso.Tên Cơ Sở')->paginate(30);
+            return response()->json(['code' => ' 200', 'embeddata' => $user], 200)->header('charset','utf-8');
+        }
+        
     }
 
     /**
@@ -75,10 +80,10 @@ class HocvienController extends Controller
             'Họ Hàng' => $request->hohang,
             'Họ Và Tên (NT1)' => $request->tenNT1,
             'Số Điện Thoại (NT1)' => $request->sdtNT1,
-            'Nghê Nghiệp (NT1)' => $request->ngeNT1,
+            'Nghê Nghiệp (NT1)' => $request->ngheNT1,
             'Họ Và Tên (NT2)' => $request->tenNT2,
             'Số Điện Thoại (NT2)' => $request->sdtNT2,
-            'Nghê Nghiệp (NT2)' => $request->ngeNT2,
+            'Nghê Nghiệp (NT2)' => $request->ngheNT2,
             'Biết Houston123 Như Thế Nào' => $request->lydobietHouson,
             'Chính Thức' => $request->chinhthuc,
             'Cơ Sở' => $request->coso
@@ -96,8 +101,13 @@ class HocvienController extends Controller
      */
     public function show($str)
     {   
-        $user = Hocvien::where('User ID','like','%'.$str.'%')->orwhere('Họ Và Tên', 'like','%'.$str.'%')->get();
-        return response()->json($user, 200)->header('charset','utf-8');
+        $hocvien = Hocvien::where('User ID','like','%'.$str.'%')->orwhere('Họ Và Tên', 'like','%'.$str.'%')->orwhere('users.Cơ Sở','like','%'.$str.'%');
+        if ($hocvien->get()->count() == 0) {
+            return response()->json(['code' => '401', 'embeddata' => null], 401);
+        } else {
+            $result = $hocvien->join('coso', 'users.Cơ Sở', '=', 'coso.Cơ Sở')->select('users.*', 'coso.Tên Cơ Sở')->paginate(30);
+            return response()->json(['code' => ' 200', 'embeddata' => $result], 200)->header('charset','utf-8');
+        }
     }
 
     /**
@@ -130,12 +140,14 @@ class HocvienController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        if(Hocvien::where('User ID', $id)->count() == 1){
-            Hocvien::where('User ID', $id)->delete();
-            return response()->json(['code', '1'],200);
+    {   
+        $hocvien = Hocvien::where('User ID', $id);
+        if($hociven->count() == 0){
+            return response()->json(['code', '401', 'message' => 'Khong tim thay'],401);
+            
         } else {
-            return response()->json(['code', '0'],200);
+            $hociven->delete();
+            return response()->json(['code', '200', 'message' => 'Xoa thanh cong'],200);
         }
         
     }

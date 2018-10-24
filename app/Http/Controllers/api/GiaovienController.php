@@ -15,10 +15,16 @@ class GiaovienController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
-        $giaovien = Giaovien::paginate(30);
-        return response()->json(['code' => '200', 'giaovien' => $giaovien], 200)->header('charset', 'utf-8');
+    {   
+ 
+        if (Giaovien::get()->count() == 0) {
+            return response()->json(['code' => '401', 'embeddate' => null], 401);
+        } else {
+            $giaovien = Giaovien::join('account', 'giaovien.Mã Giáo Viên', '=','account.account_id')->join('coso', 'giaovien.Cơ Sở', '=', 'coso.Cơ Sở')
+            ->select('giaovien.*', 'coso.Tên Cơ Sở', 'account.available')->paginate(15);
+            return response()->json(['code' => '200', 'embeddate' => $giaovien], 200)->header('charset', 'utf-8');
+        }
+        
     }
 
     /**
@@ -51,13 +57,15 @@ class GiaovienController extends Controller
     public function show($str)
     {   
       
-        $user = Giaovien::where('Mã Giáo Viên','like','%'.$str.'%')->orwhere('Họ Và Tên','like','%'.$str.'%')->orwhere('Cơ Sở','like', '%'.$str.'%')->get();
-        $count = $user->count();
-        if ($count == 0){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+        $user = Giaovien::where('Mã Giáo Viên','like','%'.$str.'%')->orwhere('Họ Và Tên','like','%'.$str.'%')->orwhere('giaovien.Cơ Sở','like', '%'.$str.'%');
+        if($user->count() == 0){
+            return response()->json(['code' => '401', 'embeddate' => null], 401);
         } else {
-            return response()->json(['code' => '200', 'quantity' => $count, 'giaovien' => $user], 200)->header('charset', 'utf-8');
+            $result = $user->join('account', 'giaovien.Mã Giáo Viên', '=','account.account_id')->join('coso', 'giaovien.Cơ Sở', '=', 'coso.Cơ Sở')
+            ->select('giaovien.*', 'coso.Tên Cơ Sở', 'account.available')->paginate(15);
+            return response()->json(['code' => '200', 'embeddate' => $result], 200)->header('charset', 'utf-8');
         }
+      
         
         
     }
