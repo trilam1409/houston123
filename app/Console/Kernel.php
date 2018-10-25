@@ -26,6 +26,10 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+
+        $schedule->call(function () {
+            DB::table('coso')->where('Cơ Sở','TDH')->delete();
+        })->dailyAt('17:45');
     }
 
     /**

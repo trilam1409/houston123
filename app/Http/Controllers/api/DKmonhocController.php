@@ -19,8 +19,11 @@ class DKmonhocController extends Controller
             return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 200);
         } else {
             $dk = DKmonhoc::paginate(15);
-            
-            return response()->json(['code' => '200', 'embeddata' => $dk])->header('charset' , 'utf-8');
+            $myObj = array(
+                'code' => '200', 'embeddata' => $dk
+            ); 
+            $myJSON = json_encode($myObj);
+            return response(str_replace(array('\\', '"{', '}"', '"[', ']"'),array('', '{', '}', '[', ']'),$myJSON))->header('Content-Type','application/json')->header('charset','utf-8');
         }
     }
 
@@ -53,27 +56,24 @@ class DKmonhocController extends Controller
             'ngaydangky' => 'required|date'
         ]);
 
-        // $monhoc = array(array('mamon' => $request->monhoc[1]),
-        //                 array('mamon'=> $request->monhoc[2])
-        //                 //array('mamon'=> $request->monhoc3)
-        //             );
         $monhoc = array();
         for ($i = 1; $i <=3; $i++){
             if($request->{"monhoc$i"} != null){
                 array_push($monhoc,array('mamon' => $request->{"monhoc$i"},'soluong' => $request->{"sl$i"}));
             }
         }
+        $json = str_replace(array('[',']'), array('',''), json_encode($monhoc));
+        //echo $json;
+        //printf(str_replace(array('[',']'), array('',''), $json));
 
-        printf(json_encode($monhoc));
+        $dangky = new DKmonhoc([
+            'User ID' => $request->mahocvien,
+            'monhoc' => $json,
+            'ngaydangky' => $request->ngaydangky
+        ]);
 
-        // $dangky = new DKmonhoc([
-        //     'User ID' => $request->mahocvien,
-        //     'monhoc' => json_encode($monhoc),
-        //     'ngaydangky' => $request->ngaydangky
-        // ]);
-
-        // $dangky->save();
-        // return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+        $dangky->save();
+        return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
     }
 
     /**

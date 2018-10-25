@@ -29,6 +29,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::resource('lophoc', 'LophocController');
     Route::resource('phonghoc', 'PhonghocController');
     Route::resource('dkmonhoc', 'DKmonhocController');
+    Route::resource('chitietlop', 'DanhsachlopController');
 
     Route::get('simple', 'AccountController@test');
     Route::resource('giaovien', 'GiaovienController');
