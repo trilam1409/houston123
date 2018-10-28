@@ -15,10 +15,10 @@ class TruongtiemnangController extends Controller
     public function index()
     {   
         if (Truongtiemnang::get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $truong = Truongtiemnang::join('coso', 'truongtiemnang.Cơ Sở','=','coso.Cơ Sở')->select('truongtiemnang.*', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $truong])->header('charser','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $truong])->header('charser','utf-8');
         }
         
     }
@@ -55,9 +55,9 @@ class TruongtiemnangController extends Controller
             ]);
 
             $truong->save();
-            return response()->json(['code' => '200', 'messsage' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200, 'messsage' => 'Tao thanh cong'], 200);
         } else {
-            return response()->json(['code' => '422', 'messsage' => 'Da ton tai'], 422);
+            return response()->json(['code' => 422, 'messsage' => 'Da ton tai'], 422);
         }
     }
 
@@ -71,10 +71,10 @@ class TruongtiemnangController extends Controller
     {   
         $truong = Truongtiemnang::where('Tên Trường','like','%'.$str.'%')->orwhere('truongtiemnang.Cơ Sở', 'like', '%'.$str.'%');
         if ($truong->get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $truong = $truong->join('coso', 'truongtiemnang.Cơ Sở','=','coso.Cơ Sở')->select('truongtiemnang.*', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $truong])->header('charser','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $truong])->header('charser','utf-8');
         }
     }
 
@@ -106,10 +106,10 @@ class TruongtiemnangController extends Controller
 
         $truong = Truongtiemnang::where('ID', $id);
         if ($truong->get()->count() == 0 ){
-            return response()->json(['code' => '401', 'messsage' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'messsage' => 'Khong tim thay'], 401);
         } else {
             $truong->update(['Tên Trường' => $request->ten, 'Địa Điểm' => $request->diadiem, 'Cơ Sở' => $request->coso]);
-            return response()->json(['code' => '200', 'messsage' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'messsage' => 'Cap nhat thanh cong'], 200);
         }
     }
 
@@ -123,10 +123,10 @@ class TruongtiemnangController extends Controller
     {
         $truong = Truongtiemnang::where('ID', $id);
         if ($truong->get()->count() == 0 ){
-            return response()->json(['code' => '401', 'messsage' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'messsage' => 'Khong tim thay'], 401);
         } else {
             $truong->delete();
-            return response()->json(['code' => '200', 'messsage' => 'Xoa nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'messsage' => 'Xoa nhat thanh cong'], 200);
         }
     }
 }

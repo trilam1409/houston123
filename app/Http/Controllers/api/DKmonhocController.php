@@ -16,14 +16,15 @@ class DKmonhocController extends Controller
     public function index()
     {
         if (DKmonhoc::get()->count() == 0) {
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 200);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 200);
         } else {
-            $dk = DKmonhoc::paginate(15);
+            $dk = DKmonhoc::where('ID', '>=', '900')->paginate(15);
             $myObj = array(
-                'code' => '200', 'embeddata' => $dk
+                'code' => 200, 'embeddata' => $dk
             ); 
             $myJSON = json_encode($myObj);
-            return response(str_replace(array('\\', '"{', '}"', '"[', ']"'),array('', '{', '}', '[', ']'),$myJSON))->header('Content-Type','application/json')->header('charset','utf-8');
+            return response(str_replace(array('\\', '"{', '}"', '"[', ']"'),array('', '{', '}', '[', ']'),$myJSON))
+            ->header('Content-Type','application/json')->header('charset','utf-8');
         }
     }
 
@@ -73,7 +74,7 @@ class DKmonhocController extends Controller
         ]);
 
         $dangky->save();
-        return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+        return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
     }
 
     /**
@@ -86,7 +87,7 @@ class DKmonhocController extends Controller
     {
         $dk = DKmonhoc::where('monhoc', 'like','%'.$id.'%')->paginate(15);
  
-        return response()->json(['code' => '200', 'embeddata' => $dk])->header('charset' , 'utf-8');
+        return response()->json(['code' => 200, 'embeddata' => $dk])->header('charset' , 'utf-8');
     }
 
     /**

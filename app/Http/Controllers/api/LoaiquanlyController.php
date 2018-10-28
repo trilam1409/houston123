@@ -15,10 +15,10 @@ class LoaiquanlyController extends Controller
     public function index()
     {   
         if (Loaiquanly::get()->count() == 0 ){
-            return response()->json(['code' => '401', 'embeddata' => null], 200);
+            return response()->json(['code' => 401, 'embeddata' => null], 200);
         } else {
             $loaiql = Loaiquanly::paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $loaiql])->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $loaiql])->header('charset','utf-8');
         }
         
     }
@@ -56,9 +56,9 @@ class LoaiquanlyController extends Controller
             ]);
             //'Default CoSo' not necessary
             $loaiql->save();
-            return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
         } else {
-            return response()->json(['code' => '422', 'message' => 'Da ton tai'], 422);
+            return response()->json(['code' => 422, 'message' => 'Da ton tai'], 422);
         }
         
     }
@@ -73,9 +73,9 @@ class LoaiquanlyController extends Controller
     {
         $loaiql = Loaiquanly::where('Loại Quản Lý','like','%'.$str.'%')->orwhere('Permission','like','%'.$str.'%');
         if ($loaiql->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
-            return response()->json(['code' => '200', 'embeddata' => $loaiql->paginate(15)], 200);
+            return response()->json(['code' => 200, 'embeddata' => $loaiql->paginate(15)], 200);
         }
     }
 
@@ -105,10 +105,10 @@ class LoaiquanlyController extends Controller
         ]);
         $loaiql = Loaiquanly::where('Loại Quản Lý', $id);
         if ($loaiql->count() == 0) {
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else {
             $loaiql->update(['Permission Allow' => $request->permission_allow, 'Permission' => $request->permission]);
-           return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+           return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
         }
         
         
@@ -124,10 +124,10 @@ class LoaiquanlyController extends Controller
     {   
         $loaiql = Loaiquanly::where('Loại Quản Lý', $id);
         if ($loaiql->count() == 0) {
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else {
             $loaiql->delete();
-           return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
+           return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
         }
         
     }

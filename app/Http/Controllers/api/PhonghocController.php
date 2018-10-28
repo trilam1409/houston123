@@ -15,10 +15,10 @@ class PhonghocController extends Controller
     public function index()
     {   
         if (Phonghoc::get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $phonghoc = Phonghoc::join('coso','phonghoc.branch','=','coso.Cơ Sở')->select('phonghoc.*','coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $phonghoc], 200)->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $phonghoc], 200)->header('charset','utf-8');
         }
         
 
@@ -59,7 +59,7 @@ class PhonghocController extends Controller
         ]);
 
         $phonghoc->save();
-        return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+        return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
     }
 
     /**
@@ -73,10 +73,10 @@ class PhonghocController extends Controller
         $phonghoc = Phonghoc::where('Mã Phòng Học','like', '%'.$str.'%')->orwhere('Sức Chứa','like','%'.$str.'%')->orwhere('branch','like','%'.$str.'%');
         
         if ($phonghoc->get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $result = $phonghoc->join('coso','phonghoc.branch','=','coso.Cơ Sở')->select('phonghoc.*','coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $result], 200)->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $result], 200)->header('charset','utf-8');
         }
 
 
@@ -110,10 +110,10 @@ class PhonghocController extends Controller
 
 
         if (Phonghoc::where('Mã Phòng Học',$id)->count() == 0 ){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else {
             Phonghoc::where('Mã Phòng Học',$id)->update(['Sức Chứa' => $request->succhua, 'Ghi Chú' => $request->ghichu]);
-            return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
         }
     }
 
@@ -126,10 +126,10 @@ class PhonghocController extends Controller
     public function destroy($id)
     {
         if (Phonghoc::where('Mã Phòng Học',$id)->count() == 0 ){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else {
             Phonghoc::where('Mã Phòng Học',$id)->delete();
-            return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
         }
     }
 }

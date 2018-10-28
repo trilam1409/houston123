@@ -16,7 +16,7 @@ class HocvienController extends Controller
     public function index()
     {   
         if (Hocvien::get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $user = Hocvien::join('coso', 'users.Cơ Sở', '=', 'coso.Cơ Sở')->select('users.*', 'coso.Tên Cơ Sở')->paginate(30);
             return response()->json(['code' => ' 200', 'embeddata' => $user], 200)->header('charset','utf-8');
@@ -103,7 +103,7 @@ class HocvienController extends Controller
     {   
         $hocvien = Hocvien::where('User ID','like','%'.$str.'%')->orwhere('Họ Và Tên', 'like','%'.$str.'%')->orwhere('users.Cơ Sở','like','%'.$str.'%');
         if ($hocvien->get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $result = $hocvien->join('coso', 'users.Cơ Sở', '=', 'coso.Cơ Sở')->select('users.*', 'coso.Tên Cơ Sở')->paginate(30);
             return response()->json(['code' => ' 200', 'embeddata' => $result], 200)->header('charset','utf-8');
@@ -143,11 +143,11 @@ class HocvienController extends Controller
     {   
         $hocvien = Hocvien::where('User ID', $id);
         if($hociven->count() == 0){
-            return response()->json(['code', '401', 'message' => 'Khong tim thay'],401);
+            return response()->json(['code', 401, 'message' => 'Khong tim thay'],401);
             
         } else {
             $hociven->delete();
-            return response()->json(['code', '200', 'message' => 'Xoa thanh cong'],200);
+            return response()->json(['code', 200, 'message' => 'Xoa thanh cong'],200);
         }
         
     }

@@ -23,20 +23,23 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('register_info', 'AccountController@register_info');
     Route::get('logout', 'AccountController@logout');
     Route::get('account', 'AccountController@account');
-    Route::resource('loaiql', 'LoaiquanlyController');
-    Route::resource('truong-tiem-nang', 'TruongtiemnangController');
-    Route::resource('monhoc', 'MonhocController');
-    Route::resource('lophoc', 'LophocController');
-    Route::resource('phonghoc', 'PhonghocController');
-    Route::resource('dkmonhoc', 'DKmonhocController');
-    Route::resource('chitietlop', 'DanhsachlopController');
 
-    Route::get('simple', 'AccountController@test');
-    Route::resource('giaovien', 'GiaovienController');
-    Route::resource('hocvien', 'HocvienController');
-    Route::resource('quanly', 'QuanlyController');
-    Route::resource('coso', 'CosoController');
+    Route::group(['middleware' => ['AuthenHouston']], function () {
+        Route::resource('lophoc', 'LophocController');
+        Route::resource('loaiql', 'LoaiquanlyController');
+        Route::resource('truong-tiem-nang', 'TruongtiemnangController');
+        Route::resource('monhoc', 'MonhocController');
+        Route::resource('phonghoc', 'PhonghocController');
+        Route::resource('dkmonhoc', 'DKmonhocController');
+        Route::resource('chitietlop', 'DanhsachlopController');
+        Route::resource('giaovien', 'GiaovienController');
+        Route::resource('hocvien', 'HocvienController');
+        Route::resource('quanly', 'QuanlyController');
+        Route::resource('coso', 'CosoController');
+    });
 });
+
+
 
 
 

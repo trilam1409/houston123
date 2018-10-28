@@ -17,10 +17,10 @@ class QuanlyController extends Controller
     {   
  
         if(Quanly::get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null],401);
+            return response()->json(['code' => 401, 'embeddata' => null],401);
        } else{
             $result = Quanly::join('coso', 'quanly.Cơ Sở', '=', 'coso.Cơ Sở')->select('quanly.*', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $result], 200)->header('charset', 'utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $result], 200)->header('charset', 'utf-8');
        }
         
   
@@ -58,10 +58,10 @@ class QuanlyController extends Controller
        $quanly = Quanly::where('Mã Quản Lý','like','%'.$str.'%')->orWhere('Họ Và Tên','like','%'.$str.'%')->orWhere('quanly.Cơ Sở','like','%'.$str.'%');
   
        if($quanly->get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null],401);
+            return response()->json(['code' => 401, 'embeddata' => null],401);
        } else{
             $result = $quanly->join('coso', 'quanly.Cơ Sở', '=', 'coso.Cơ Sở')->select('quanly.*', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $result], 200)->header('charset', 'utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $result], 200)->header('charset', 'utf-8');
        }
     }
 
@@ -108,10 +108,10 @@ class QuanlyController extends Controller
         
         Account::where('account_id',$id)->update(['fullname' => $request->hovaten,'permission' => $request->permission, 'khuvuc' => $request->coso,
          'available' => $request->available, 'hinhanh' => $request->hinhanh, 'loaiquanly' => $request->chucvu]);
-        return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+        return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
 
         } else {
-            return response()->json(['code' => '401', 'message' => 'Khong ton tai'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong ton tai'], 401);
         }
 
        
@@ -127,11 +127,11 @@ class QuanlyController extends Controller
     {   
         $exist = Quanly::where('Mã Quản Lý',$id)->count();
         if ($exist == 0){
-            return response()->json(['code' => '401', 'message' => "Khong tim thay"], 401);
+            return response()->json(['code' => 401, 'message' => "Khong tim thay"], 401);
         } else if ($exist == 1){
             Quanly::where('Mã Quản Lý',$id)->delete();
             Account::where('account_id', $id)->delete();
-            return response()->json(['code' => '200', 'message' => "Xoa thanh cong"], 200);
+            return response()->json(['code' => 200, 'message' => "Xoa thanh cong"], 200);
         }
 
     }

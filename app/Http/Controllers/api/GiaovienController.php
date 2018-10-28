@@ -18,11 +18,11 @@ class GiaovienController extends Controller
     {   
  
         if (Giaovien::get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $giaovien = Giaovien::join('account', 'giaovien.Mã Giáo Viên', '=','account.account_id')->join('coso', 'giaovien.Cơ Sở', '=', 'coso.Cơ Sở')
             ->select('giaovien.*', 'coso.Tên Cơ Sở', 'account.available')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $giaovien], 200)->header('charset', 'utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $giaovien], 200)->header('charset', 'utf-8');
         }
         
     }
@@ -59,11 +59,11 @@ class GiaovienController extends Controller
       
         $user = Giaovien::where('Mã Giáo Viên','like','%'.$str.'%')->orwhere('Họ Và Tên','like','%'.$str.'%')->orwhere('giaovien.Cơ Sở','like', '%'.$str.'%');
         if($user->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $result = $user->join('account', 'giaovien.Mã Giáo Viên', '=','account.account_id')->join('coso', 'giaovien.Cơ Sở', '=', 'coso.Cơ Sở')
             ->select('giaovien.*', 'coso.Tên Cơ Sở', 'account.available')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $result], 200)->header('charset', 'utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $result], 200)->header('charset', 'utf-8');
         }
       
         
@@ -110,9 +110,9 @@ class GiaovienController extends Controller
                 'Lý Do Nghỉ' => $request->lydonghi, 'Cơ Sở' => $request->coso]);
             Account::where('account_id',$id)->update(['fullname' => $request->hovaten,'permission' => $request->permission, 'khuvuc' => $request->coso,
                 'available' => $request->available, 'hinhanh' => $request->hinhanh]);
-        return response()->json(['code' => '200', 'message' => 'Tai khoan cap nhat thanh cong']);
+        return response()->json(['code' => 200, 'message' => 'Tai khoan cap nhat thanh cong']);
         } else {
-            return response()->json(['code' => '401', 'message' => 'Tai khoan khong ton tai'], 401);
+            return response()->json(['code' => 401, 'message' => 'Tai khoan khong ton tai'], 401);
         }
 
         
@@ -128,11 +128,11 @@ class GiaovienController extends Controller
     {
         $exist = Giaovien::where('Mã Giáo Viên',$id)->count();
         if($exist == 0){
-            return response()->json(['code' => '401', 'message' => "Tai khoan khong ton tai"], 401);
+            return response()->json(['code' => 401, 'message' => "Tai khoan khong ton tai"], 401);
         } else if ($exist == 1){
             Giaovien::where('Mã Giáo Viên',$id)->delete();
             Account::where('account_id', $id)->delete();
-            return response()->json(['code' => '200', 'message' => "Tai khoan da duoc xoa"], 200);
+            return response()->json(['code' => 200, 'message' => "Tai khoan da duoc xoa"], 200);
         }
     }
 }

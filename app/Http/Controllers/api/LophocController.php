@@ -16,13 +16,13 @@ class LophocController extends Controller
     public function index()
     {   
         if (Lophoc::get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $lophoc = Lophoc::join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
             ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
             ->select('Mã Lớp', 'Lớp', 'lophoc.Mã Môn Học', 'danhsachmonhoc.name', 'lophoc.Mã Giáo Viên', 'giaovien.Họ Và Tên', 
             'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $lophoc])->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $lophoc])->header('charset','utf-8');
         }     
     }
 
@@ -71,7 +71,7 @@ class LophocController extends Controller
 
          $lophoc->save();
 
-         return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+         return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
     }
 
     /**
@@ -92,9 +92,9 @@ class LophocController extends Controller
         'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
      
         if ($lophoc->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
-            return response()->json(['code' => '200', 'embeddata' => $result])->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $result])->header('charset','utf-8');
         }
     }
 
@@ -128,12 +128,12 @@ class LophocController extends Controller
         ]);
 
         if (Lophoc::where('Mã Lớp', $id)->count() == 0 ){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else {
             Lophoc::where('Mã Lớp', $id)->update(['Lớp' => $request->lop, 'Mã Môn Học' => $request->mamonhoc, 'Mã Giáo Viên' => $request->magiaovien, 
             'Ngày Bắt Đầu' => date("Y-m-d", strtotime($request->batdau)), 'Ngày Kết Thúc' => date("Y-m-d", strtotime($request->ketthuc)), 
             'branch' => $request->coso]);
-            return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
         }
         
         
@@ -151,10 +151,10 @@ class LophocController extends Controller
     {   
         $lophoc = Lophoc::where('Mã Lớp', $id);
         if ($lophoc->count() == 0){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else {
             $lophoc->delete();
-            return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
         }
     }
 }

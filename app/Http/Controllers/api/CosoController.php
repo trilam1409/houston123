@@ -15,10 +15,10 @@ class CosoController extends Controller
     public function index()
     {   
         if (Coso::get()->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null], 200);
+            return response()->json(['code' => 401, 'embeddata' => null], 200);
         } else {
             $coso = Coso::paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $coso])->header('charset', 'utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $coso])->header('charset', 'utf-8');
         }
         
     }
@@ -52,9 +52,9 @@ class CosoController extends Controller
                 'Tên Cơ Sở' => $request->tencoso
             ]);
             $coso->save();
-            return response()->json(['code' => '200','message' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200,'message' => 'Tao thanh cong'], 200);
         } else {
-            return response()->json(['code' => '422', 'message' => 'Ton tai'], 200);
+            return response()->json(['code' => 422, 'message' => 'Ton tai'], 200);
         }
 
         
@@ -70,9 +70,9 @@ class CosoController extends Controller
     {   
         $coso = Coso::where('Cơ Sở','like','%'.$str.'%')->orwhere('Tên Cơ Sở','like','%'.$str.'%');
         if($coso->count() == 0){
-            return response()->json(['code' => '401', 'embeddata' => null],401);
+            return response()->json(['code' => 401, 'embeddata' => null],401);
         } else {
-            return response()->json(['code' => '200', 'embeddata' => $coso->paginate(15)])->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $coso->paginate(15)])->header('charset','utf-8');
         }
     }
 
@@ -102,10 +102,10 @@ class CosoController extends Controller
         $coso = Coso::where('Cơ Sở', $id);
 
         if($coso->count() == 0){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else{
             $coso->update(['Tên Cơ Sở' => $request->tencoso]);
-            return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
         }
     }
 
@@ -119,10 +119,10 @@ class CosoController extends Controller
     {
         $coso = Coso::where('Cơ Sở', $id);
         if($coso->count() == 0){
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         } else{
             $coso->delete();
-            return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
         }
     }
 }

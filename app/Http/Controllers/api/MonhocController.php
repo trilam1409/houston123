@@ -15,10 +15,10 @@ class MonhocController extends Controller
     public function index()
     {   
         if (Monhoc::get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $monhoc = Monhoc::paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $monhoc], 200)->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $monhoc], 200)->header('charset','utf-8');
         }
         
     }
@@ -55,9 +55,9 @@ class MonhocController extends Controller
             ]);
 
             $monhoc->save();
-            return response()->json(['code' => '200', 'message' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
         } else {
-            return response()->json(['code' => '422', 'message' => 'Da ton tai'], 422);
+            return response()->json(['code' => 422, 'message' => 'Da ton tai'], 422);
         }
     }
 
@@ -71,10 +71,10 @@ class MonhocController extends Controller
     {   
         $monhoc = Monhoc::where('mamon','like','%'.$str.'%')->orwhere('name','like','%'.$str.'%')->orwhere('managerAllow','like','%'.$str.'%');
         if ($monhoc->get()->count() == 0) {
-            return response()->json(['code' => '401', 'embeddata' => null], 401);
+            return response()->json(['code' => 401, 'embeddata' => null], 401);
         } else {
             $monhoc = $monhoc->paginate(15);
-            return response()->json(['code' => '200', 'embeddata' => $monhoc], 200)->header('charset','utf-8');
+            return response()->json(['code' => 200, 'embeddata' => $monhoc], 200)->header('charset','utf-8');
         }
     }
 
@@ -105,9 +105,9 @@ class MonhocController extends Controller
         $monhoc = Monhoc::where('mamon',$id);
         if ($monhoc->get()->count() == 1){
             $monhoc->update(['name' => $request->ten,'managerAllow' => $request->bophanquanly]);
-            return response()->json(['code' => '200', 'message' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
         } else {
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         }
     }
 
@@ -122,9 +122,9 @@ class MonhocController extends Controller
         $monhoc = Monhoc::where('mamon',$id);
         if ($monhoc->get()->count() == 1){
             $monhoc->delete();
-            return response()->json(['code' => '200', 'message' => 'Xoa thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
         } else {
-            return response()->json(['code' => '401', 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
         }
     }
 }
