@@ -15,10 +15,12 @@ class PhonghocController extends Controller
     public function index()
     {   
         if (Phonghoc::get()->count() == 0) {
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401]);
         } else {
             $phonghoc = Phonghoc::join('coso','phonghoc.branch','=','coso.Cơ Sở')->select('phonghoc.*','coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $phonghoc], 200)->header('charset','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($phonghoc);
+            return response()->json($data)->header('charset','utf-8');
         }
         
 
@@ -73,10 +75,12 @@ class PhonghocController extends Controller
         $phonghoc = Phonghoc::where('Mã Phòng Học','like', '%'.$str.'%')->orwhere('Sức Chứa','like','%'.$str.'%')->orwhere('branch','like','%'.$str.'%');
         
         if ($phonghoc->get()->count() == 0) {
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401]);
         } else {
             $result = $phonghoc->join('coso','phonghoc.branch','=','coso.Cơ Sở')->select('phonghoc.*','coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $result], 200)->header('charset','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($result);
+            return response()->json($data)->header('charset','utf-8');
         }
 
 

@@ -15,10 +15,12 @@ class LoaiquanlyController extends Controller
     public function index()
     {   
         if (Loaiquanly::get()->count() == 0 ){
-            return response()->json(['code' => 401, 'embeddata' => null], 200);
+            return response()->json(['code' => 401]);
         } else {
             $loaiql = Loaiquanly::paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $loaiql])->header('charset','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($loaiql);
+            return response()->json($data)->header('charset','utf-8');
         }
         
     }
@@ -73,9 +75,11 @@ class LoaiquanlyController extends Controller
     {
         $loaiql = Loaiquanly::where('Loại Quản Lý','like','%'.$str.'%')->orwhere('Permission','like','%'.$str.'%');
         if ($loaiql->count() == 0){
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401]);
         } else {
-            return response()->json(['code' => 200, 'embeddata' => $loaiql->paginate(15)], 200);
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($loaiql->paginate(15));
+            return response()->json($data)->header('charset','utf-8');
         }
     }
 

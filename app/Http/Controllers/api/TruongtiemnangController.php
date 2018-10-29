@@ -15,10 +15,12 @@ class TruongtiemnangController extends Controller
     public function index()
     {   
         if (Truongtiemnang::get()->count() == 0){
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401]);
         } else {
             $truong = Truongtiemnang::join('coso', 'truongtiemnang.Cơ Sở','=','coso.Cơ Sở')->select('truongtiemnang.*', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $truong])->header('charser','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($truong);
+            return response()->json($data)->header('charser','utf-8');
         }
         
     }
@@ -69,12 +71,14 @@ class TruongtiemnangController extends Controller
      */
     public function show($str)
     {   
-        $truong = Truongtiemnang::where('Tên Trường','like','%'.$str.'%')->orwhere('truongtiemnang.Cơ Sở', 'like', '%'.$str.'%');
+        $truong = Truongtiemnang::where('ID','like','%'.$str.'%')->orwhere('Tên Trường','like','%'.$str.'%')->orwhere('truongtiemnang.Cơ Sở', 'like', '%'.$str.'%');
         if ($truong->get()->count() == 0){
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401]);
         } else {
             $truong = $truong->join('coso', 'truongtiemnang.Cơ Sở','=','coso.Cơ Sở')->select('truongtiemnang.*', 'coso.Tên Cơ Sở')->paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $truong])->header('charser','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($truong);
+            return response()->json($data)->header('charser','utf-8');
         }
     }
 

@@ -16,10 +16,12 @@ class DanhsachlopController extends Controller
     public function index()
     {
         if (Danhsachlop::get()->count() == 0 ){
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401], 401);
         } else {
             $ds = Danhsachlop::paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $ds], 200)->header('charset','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($ds);
+            return response()->json($data)->header('charset','utf-8');
         }
     }
 
@@ -70,10 +72,12 @@ class DanhsachlopController extends Controller
     {   
         $ds = Danhsachlop::where('User ID', 'like', '%'.$str.'%')->orwhere('Mã Lớp','like','%'.$str.'%');
         if ($ds->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'embeddata' => null], 401);
+            return response()->json(['code' => 401]);
         } else {
             $ds = $ds->paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $ds], 200)->header('charset','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($ds);
+            return response()->json($data)->header('charset','utf-8');
         }
     }
 

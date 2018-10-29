@@ -15,10 +15,12 @@ class CosoController extends Controller
     public function index()
     {   
         if (Coso::get()->count() == 0){
-            return response()->json(['code' => 401, 'embeddata' => null], 200);
+            return response()->json(['code' => 401]);
         } else {
             $coso = Coso::paginate(15);
-            return response()->json(['code' => 200, 'embeddata' => $coso])->header('charset', 'utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($coso);
+            return response()->json($data)->header('charset', 'utf-8');
         }
         
     }
@@ -54,7 +56,7 @@ class CosoController extends Controller
             $coso->save();
             return response()->json(['code' => 200,'message' => 'Tao thanh cong'], 200);
         } else {
-            return response()->json(['code' => 422, 'message' => 'Ton tai'], 200);
+            return response()->json(['code' => 422, 'message' => 'Ton tai'], 422);
         }
 
         
@@ -70,9 +72,11 @@ class CosoController extends Controller
     {   
         $coso = Coso::where('Cơ Sở','like','%'.$str.'%')->orwhere('Tên Cơ Sở','like','%'.$str.'%');
         if($coso->count() == 0){
-            return response()->json(['code' => 401, 'embeddata' => null],401);
+            return response()->json(['code' => 401],401);
         } else {
-            return response()->json(['code' => 200, 'embeddata' => $coso->paginate(15)])->header('charset','utf-8');
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($coso->paginate(15));
+            return response()->json($data)->header('charset','utf-8');
         }
     }
 
