@@ -166,10 +166,13 @@ class AccountController extends Controller
     }
     
     public function test(){
-        $id = Hocvien::min('Lớp');
-        echo $id . ' ';
-        // $id_new = str_pad(substr($id, -5) + 1, '7', 'HT00000', STR_PAD_LEFT);
-        // echo $id_new;
+        $book = DB::table('giaovien')->paginate(3);
+
+        $custom = collect(['my_data' => 'My custom data here']);
+
+        $data = $custom->merge($book);
+
+        return response()->json($data);
 
     }
 }

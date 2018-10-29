@@ -24,7 +24,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::get('logout', 'AccountController@logout');
     Route::get('account', 'AccountController@account');
 
-    Route::group(['middleware' => ['AuthenHouston']], function () {
+    //Route::group(['middleware' => ['AuthenHouston']], function () {
         Route::resource('lophoc', 'LophocController');
         Route::resource('loaiql', 'LoaiquanlyController');
         Route::resource('truong-tiem-nang', 'TruongtiemnangController');
@@ -36,7 +36,9 @@ Route::group(['namespace' => 'api'], function () {
         Route::resource('hocvien', 'HocvienController');
         Route::resource('quanly', 'QuanlyController');
         Route::resource('coso', 'CosoController');
-    });
+    //});
+
+    Route::get('simple', 'AccountController@test');
 });
 
 
