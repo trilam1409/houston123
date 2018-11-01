@@ -5,7 +5,7 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\DKmonhoc;
-
+use App\Chuongtrinhbosung;
 class DKmonhocController extends Controller
 {
     /**
@@ -16,17 +16,19 @@ class DKmonhocController extends Controller
     public function index()
     {
         if (DKmonhoc::get()->count() == 0) {
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 200);
+            return response()->json(['code' => 401]);
         } else {
-            $dk = DKmonhoc::where('ID', '>=', '900')->paginate(15);
-            $myObj = array(
-                'code' => 200, 'embeddata' => $dk
-            ); 
-            $myJSON = json_encode($myObj);
-            return response(str_replace(array('\\', '"{', '}"', '"[', ']"'),array('', '{', '}', '[', ']'),$myJSON))
-            ->header('Content-Type','application/json')->header('charset','utf-8');
+            $dk = DKmonhoc::paginate(15);
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($dk);
+            $myJSON = json_encode($data, JSON_UNESCAPED_UNICODE);
+            return response(str_replace(array('\\', '"{', '}"', '"[', ']"', '{"0":', '"1":', '"2":', '"3":', '"4":', '"5":', '"6":', '"7":', '"8":', '"9":', '"10":','},"ngaydangky"'),
+                array('', '{', '}', '[', ']','[', '', '', '', '', '', '', '', '', '', '', '],"ngaydangky"'),$myJSON))
+                ->header('Content-Type','application/json')->header('charset','utf-8');
         }
     }
+
+    
 
     /**
      * Show the form for creating a new resource.
@@ -48,33 +50,56 @@ class DKmonhocController extends Controller
     {
         $request->validate([
             'mahocvien' => 'required|max:10',
-            'monhoc1' => 'required|string',
-            'monhoc2' => 'string',
-            'monhoc3' => 'string',
-            'sl1' => 'required|string',
-            'sl2' => 'string',
-            'sl3' => 'string',
+            'mamon1' => 'string',
+            'mamon2' => 'string',
+            'mamon3' => 'string',
+            'mamon4' => 'string',
             'ngaydangky' => 'required|date'
         ]);
 
         $monhoc = array();
-        for ($i = 1; $i <=3; $i++){
-            if($request->{"monhoc$i"} != null){
-                array_push($monhoc,array('mamon' => $request->{"monhoc$i"},'soluong' => $request->{"sl$i"}));
-            }
+        
+        for ($i = 1; $i <=4; $i++){
+            if($request->{"mamon$i"} != null){
+                array_push($monhoc, array('mamon' => $request->{"mamon$i"}));
+            } 
         }
-        $json = str_replace(array('[',']'), array('',''), json_encode($monhoc));
-        //echo $json;
-        //printf(str_replace(array('[',']'), array('',''), $json));
-
+        $json = json_encode($monhoc, JSON_UNESCAPED_UNICODE);
         $dangky = new DKmonhoc([
             'User ID' => $request->mahocvien,
             'monhoc' => $json,
             'ngaydangky' => $request->ngaydangky
         ]);
 
-        $dangky->save();
-        return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
+        if ($dangky->save()){
+            return response()->json(['code' => 200, 'message' => 'Tao thanh cong']);
+        } else {
+            return response()->json(['code' => 401, 'message' => 'Khong thanh cong']);
+        }
+    }
+
+    public function store_trongoi(Request $request)
+    {
+        $request->validate([
+            'mahocvien' => 'required|max:10',
+            'idchuongtrinh' => 'required|numeric',
+            'ngaydangky' => 'required|date'
+        ]);
+
+
+
+        //$json = json_encode($monhoc, JSON_UNESCAPED_UNICODE);
+        $dangky = new DKmonhoc([
+            'User ID' => $request->mahocvien,
+            'monhoc' => $request->idchuongtrinh,
+            'ngaydangky' => $request->ngaydangky
+        ]);
+
+        if ($dangky->save()){
+            return response()->json(['code' => 200, 'message' => 'Tao thanh cong']);
+        } else {
+            return response()->json(['code' => 401, 'message' => 'Khong thanh cong']);
+        }
     }
 
     /**
@@ -83,11 +108,20 @@ class DKmonhocController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($str)
     {
-        $dk = DKmonhoc::where('monhoc', 'like','%'.$id.'%')->paginate(15);
- 
-        return response()->json(['code' => 200, 'embeddata' => $dk])->header('charset' , 'utf-8');
+        $dk = DKmonhoc::where('ID','like','%'.$str.'%')->orwhere('User ID','like','%'.$str.'%')->orwhere('monhoc', 'like','%'.$str.'%');
+        if ($dk->count() == 0) {
+            return response()->json(['code' => 401]);
+        } else {
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($dk->paginate(15));
+            $myJSON = json_encode($data, JSON_UNESCAPED_UNICODE);
+            return response(str_replace(array('\\', '"{', '}"', '"[', ']"', '{"0":', '"1":', '"2":', '"3":', '"4":', '"5":', '"6":', '"7":', '"8":', '"9":', '"10":','},"ngaydangky"'),
+                array('', '{', '}', '[', ']','[', '', '', '', '', '', '', '', '', '', '', '],"ngaydangky"'),$myJSON))
+                ->header('Content-Type','application/json')->header('charset','utf-8');
+        }
+
     }
 
     /**
@@ -120,7 +154,15 @@ class DKmonhocController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        DKmonhoc::where('ID',$id)->delete();
+    {   
+        $dk = DKmonhoc::where('ID',$id);
+        if ($dk->count() == 0){
+            return response()->json(['code' => 401, 'message' => 'Khong tim thay']);
+        } else {
+            $dk->delete();
+            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong']);
+        }
     }
+
+
 }

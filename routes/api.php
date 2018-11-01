@@ -31,11 +31,15 @@ Route::group(['namespace' => 'api'], function () {
         Route::resource('monhoc', 'MonhocController');
         Route::resource('phonghoc', 'PhonghocController');
         Route::resource('dkmonhoc', 'DKmonhocController');
+        Route::post('dktrongoi', 'DKmonhocController@store_trongoi');
         Route::resource('chitietlop', 'DanhsachlopController');
         Route::resource('giaovien', 'GiaovienController');
         Route::resource('hocvien', 'HocvienController');
         Route::resource('quanly', 'QuanlyController');
         Route::resource('coso', 'CosoController');
+        Route::resource('chuongtrinhbosung', 'ChuongtrinhbosungController');
+        Route::resource('cskh-cu', 'CSKHcuController');
+
     //});
 
     Route::get('simple', 'AccountController@test');
