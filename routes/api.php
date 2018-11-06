@@ -22,6 +22,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('register', 'AccountController@register');
     Route::post('register_info', 'AccountController@register_info');
     Route::get('logout', 'AccountController@logout');
+    Route::post('change_pass', 'AccountController@changePassword');
     Route::get('account', 'AccountController@account');
 
     //Route::group(['middleware' => ['AuthenHouston']], function () {

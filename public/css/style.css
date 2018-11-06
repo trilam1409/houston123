@@ -1,0 +1,103 @@
+
+
+body {
+    font-size: 14px;
+    font-family: 'Rambla', sans-serif;
+}
+
+p {
+    margin-bottom: 5px;
+}
+
+
+.field-body {
+    display: none;
+}
+
+.field-body.show {
+    display: block;
+}
+
+.views-row{
+    border: 1px solid;
+     
+}
+
+.views-col{
+    position: relative;
+    width: 100%;
+    min-height: 1px;
+    padding: 15px; 
+
+}
+
+.field-body .views-col-1{
+    padding-left: 30px;
+    
+}
+
+.field-header{
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+}
+
+.field-header .views-col{
+    font-weight: bold;
+    background-color: #64C6AF;
+    color: #fff;
+    font-size: 16px;
+
+}
+
+.field-header .views-col:not(:last-child){
+    border-right: 1px solid #fff;
+}
+
+.views-col-1{
+    flex: 0 0 10%;
+    max-width: 10%;
+    min-height: 1px;
+}
+.views-col-2{
+    flex: 0 0 20%;
+    max-width: 20%;
+    min-height: 1px;
+}
+.views-col-3{
+    flex: 0 0 20%;
+    max-width: 20%;
+    min-height: 1px;
+}
+.views-col-4{
+    flex: 0 0 20%;
+    max-width: 20%;
+    min-height: 1px;
+}
+.views-col-5{
+    flex: 0 0 20%;
+    max-width: 20%;
+    min-height: 1px;
+}
+.views-col-6{
+    flex: 0 0 10%;
+    max-width: 10%;
+    min-height: 1px;
+}
+
+.field-group{
+    padding-top: 54px;
+}
+
+.field-body > .row{
+    max-height: 40px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.2s linear;
+ }
+
+ .field-body > .row.show{
+     max-height: 200px;
+ }
+
+

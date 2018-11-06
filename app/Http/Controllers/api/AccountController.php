@@ -48,7 +48,7 @@ class AccountController extends Controller
             $detail = Account::where('account_id',$account_id_new)->first();
             return response()->json(array('code' => 200, 'account_id' => $detail->account_id));
         } else {
-            return response()->json(['code' => 422, 'message' => 'ID chi dinh da duoc su dung']);
+            return response()->json(['code' => 422, 'message' => 'Tên tài khoản đã được sử dụng']);
         }
         
     }
@@ -67,9 +67,9 @@ class AccountController extends Controller
         ]);
 
         if(QuanLy::where('Mã Quản Lý',$request->account_id)->count() >0){
-            return response()->json(['code' => 422, 'message' => 'Tai khoan da ton tai']);
+            return response()->json(['code' => 422, 'message' => 'Tài khoản đã tồn tại']);
         } else  if(Giaovien::where('Mã Giáo Viên',$request->account_id)->count() >0){
-            return response()->json(['code' => 422, 'message' => 'Tai khoan da ton tai']);
+            return response()->json(['code' => 422, 'message' => 'Tài khoản đã tồn tại']);
         } 
 
         $detail = Account::where('account_id',$request->account_id)->first();
@@ -106,9 +106,9 @@ class AccountController extends Controller
             $giaovien->save();
             $account = Account::where('account_id',$request->account_id)->update(['available' => $request->available, 'hinhanh' => $request->hinhanh,
          'loaiquanly' => $request->loaiquanly]);
-        return response()->json(['code' => 200, 'message' => 'GV tao thanh cong']);
+        return response()->json(['code' => 200, 'message' => 'Tạo giáo viên thành công']);
         } else{
-            return response()->json(['code' => 400, 'message' => 'Error']);
+            return response()->json(['code' => 400, 'message' => 'Không thành công']);
         }
 
     }
@@ -121,10 +121,10 @@ class AccountController extends Controller
         $pass_verify = Account::select('loginPASS')->where('loginID', $request->loginID)->first();
         if (!is_null($pass_verify)){
             if (!Hash::check($request->loginPASS, $pass_verify->loginPASS)) {
-                return response()->json(['code' => 400, 'message' => 'Dang nhap that bai']);
+                return response()->json(['code' => 400, 'message' => 'Mật khẩu không hợp lệ']);
             }
         } else{
-            return response()->json(['code' => 401,'message' => "Tai khoan khong ton tai"]);
+            return response()->json(['code' => 401,'message' => "Tài khoản không tồn tại"]);
         }
 
         $account = Account::where('loginID', $request->loginID)->first();
@@ -139,7 +139,7 @@ class AccountController extends Controller
         $value = $request->bearerToken();
         $id = (new Parser())->parse($value)->getHeader('jti');
         DB::table('oauth_access_tokens')->where('id', $id)->update(['revoked' => true]);
-        return response()->json(['code' => 200, 'message' => "Dang xuat thanh cong"]);
+        return response()->json(['code' => 200, 'message' => "Đăng xuất thành công"]);
     }
 
     public function account(Request $request){
@@ -148,21 +148,59 @@ class AccountController extends Controller
         if(DB::table('oauth_access_tokens')->where('id',$id)->count() == 1){
             $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
             if($account_token->revoked == 0){
-                $account = Account::where('account_id',$account_token->user_id)->first();
+                
                 if( Giaovien::where('Mã Giáo Viên', $account_token->user_id)->count() == 1){
-                    $giaovien = Giaovien::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND','Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Giáo Viên', $account_token->user_id)->first();
-                    return response()->json(array([$account , $giaovien]), 200)->header('charset','utf-8');
+                    $account = Account::where('account_id',$account_token->user_id)->join('giaovien','account_id', '=', 'giaovien.Mã Giáo Viên')
+                    ->select('account.account_id','giaovien.*','account.permission')->get();
+                    return response()->json(['code' => 200, 'data' => $account])->header('charset','utf-8');
                 } else if (Quanly::where('Mã Quản Lý', $account_token->user_id)->count() == 1){
-                    $quanly = Quanly::select('Số Điện Thoại', 'Địa Chỉ', 'Email', 'CMND', 'Chức Vụ', 'Ngày Nghỉ', 'Lý Do Nghỉ')->where('Mã Quản Lý', $account_token->user_id)->first();
-                    return response()->json(array([$account , $quanly]), 200)->header('charset','utf-8');
+                    $account = Account::where('account_id',$account_token->user_id)->join('quanly','account_id', '=', 'quanly.Mã Quản Lý')
+                    ->select('account.account_id','quanly.*','account.permission')->get();
+                    return response()->json(['code' => 200, 'data' => $account])->header('charset','utf-8');
                 } 
             } else{
-                return response()->json(['code' => 401, 'message' => 'Chuoi token da het han'], 401);
+                return response()->json(['code' => 401, 'message' => 'Lần đăng nhập trước đã hết hạn'], 401);
             }
         } else {
-            return response()->json(['code' => 401, 'message' => 'Chuoi token khong ton tai'], 401);
+            return response()->json(['code' => 401, 'message' => 'Chứng thực không thành công'], 401);
         }
        
+    }
+
+    public function changePassword(Request $request)
+    {   
+        $value = $request->bearerToken();
+        $id = (new Parser())->parse($value)->getHeader('jti');
+       
+        if (DB::table('oauth_access_tokens')->where('id',$id)->count() == 1){
+            $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
+        }
+        else{
+            return response()->json(['code' => 401, 'message' => 'Lần đăng nhập trước đã hết hạn'], 401);
+        }
+
+        $request->validate([
+            'pass_old' => 'required|string',
+            'pass_new' => 'required|string',
+            'pass_confirm' => 'required|string',
+        ]);
+        
+        
+        $pass_verify = Account::select('loginPASS')->where('account_id', $account_token->user_id)->first();
+       
+        if (!is_null($pass_verify)){
+            if (!Hash::check($request->pass_old, $pass_verify->loginPASS)) {
+                return response()->json(['code' => 400, 'message' => 'Mật khẩu cũ không đúng']);
+            }
+        } 
+
+        if ($request->pass_new != $request->pass_confirm) {
+            return response()->json(['code' => 401, 'message' => 'Mật khẩu xác nhận không trùng nhau']);
+        } else {
+            Account::where('account_id', $account_token->user_id)->update(['loginPASS' => bcrypt($request->pass_new)]);
+            return response()->json(['code' => 200, 'message' => 'Thay đổi mật khẩu thành công']);
+        }
+
     }
     
     public function test(){

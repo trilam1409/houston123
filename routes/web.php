@@ -16,9 +16,9 @@ Route::get('/', function () {
 });
 
 
-Route::get('about', function () {
-    return view('about');
-})->middleware('test');
+Route::get('api', function () {
+    return view('list_api');
+});
 
 
 
