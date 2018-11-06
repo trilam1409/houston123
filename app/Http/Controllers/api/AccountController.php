@@ -90,7 +90,7 @@ class AccountController extends Controller
             $quanly->save();
             $account = Account::where('account_id',$request->account_id)->update(['available' => $request->available, 'hinhanh' => $request->hinhanh,
          'loaiquanly' => $request->loaiquanly]);
-        return response()->json(['code' => 200, 'message' => 'QL tao thanh cong']);
+        return response()->json(['code' => 200, 'message' => 'Tạo quản lý thành công']);
         } else if ($type == 'GV'){
             $giaovien = new Giaovien([
                 'Mã Giáo Viên' => $request->account_id,

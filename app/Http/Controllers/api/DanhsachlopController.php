@@ -59,7 +59,7 @@ class DanhsachlopController extends Controller
 
         $ds->save();
 
-        return response()->json(['code' => 200, 'message' => 'Tao thanh cong'],200);
+        return response()->json(['code' => 200, 'message' => 'Tạo thành công'],200);
     }
 
     /**
@@ -103,7 +103,7 @@ class DanhsachlopController extends Controller
     {   
         $ds = Danhsachlop::where('ID',$id);
         if ($ds->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else {    
             $request->validate([
                 'mahocvien' => 'required|string',
@@ -118,7 +118,7 @@ class DanhsachlopController extends Controller
                 'Mã Lớp Chuyển' => $request->malopchuyen,
                 'Thời Gian Chuyển' => $request->thoigianchuyen
             ]);
-            return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'],200);
+            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'],200);
         }
         
     }
@@ -133,10 +133,10 @@ class DanhsachlopController extends Controller
     {
         $ds = Danhsachlop::where('ID',$id);
         if ($ds->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else {    
             $ds->delete();
-            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'],200);
+            return response()->json(['code' => 200, 'message' => 'Xóa thành công'],200);
         }
     }
 }

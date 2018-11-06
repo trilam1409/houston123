@@ -58,9 +58,9 @@ class LoaiquanlyController extends Controller
             ]);
             //'Default CoSo' not necessary
             $loaiql->save();
-            return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
         } else {
-            return response()->json(['code' => 422, 'message' => 'Da ton tai'], 422);
+            return response()->json(['code' => 422, 'message' => 'Đã tồn tại'], 422);
         }
         
     }
@@ -109,10 +109,10 @@ class LoaiquanlyController extends Controller
         ]);
         $loaiql = Loaiquanly::where('Loại Quản Lý', $id);
         if ($loaiql->count() == 0) {
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else {
             $loaiql->update(['Permission Allow' => $request->permission_allow, 'Permission' => $request->permission]);
-           return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
+           return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         }
         
         
@@ -128,10 +128,10 @@ class LoaiquanlyController extends Controller
     {   
         $loaiql = Loaiquanly::where('Loại Quản Lý', $id);
         if ($loaiql->count() == 0) {
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else {
             $loaiql->delete();
-           return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
+           return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);
         }
         
     }

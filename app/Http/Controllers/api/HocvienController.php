@@ -147,11 +147,11 @@ class HocvienController extends Controller
     {   
         $hocvien = Hocvien::where('User ID', $id);
         if($hociven->count() == 0){
-            return response()->json(['code', 401, 'message' => 'Khong tim thay'],401);
+            return response()->json(['code', 401, 'message' => 'Không tìm thấy'],401);
             
         } else {
             $hociven->delete();
-            return response()->json(['code', 200, 'message' => 'Xoa thanh cong'],200);
+            return response()->json(['code', 200, 'message' => 'Xóa thành công'],200);
         }
         
     }

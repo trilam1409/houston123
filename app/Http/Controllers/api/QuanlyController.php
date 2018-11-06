@@ -112,10 +112,10 @@ class QuanlyController extends Controller
         
         Account::where('account_id',$id)->update(['fullname' => $request->hovaten,'permission' => $request->permission, 'khuvuc' => $request->coso,
          'available' => $request->available, 'hinhanh' => $request->hinhanh, 'loaiquanly' => $request->chucvu]);
-        return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
+        return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
 
         } else {
-            return response()->json(['code' => 401, 'message' => 'Khong ton tai'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         }
 
        
@@ -131,11 +131,11 @@ class QuanlyController extends Controller
     {   
         $exist = Quanly::where('Mã Quản Lý',$id)->count();
         if ($exist == 0){
-            return response()->json(['code' => 401, 'message' => "Khong tim thay"], 401);
+            return response()->json(['code' => 401, 'message' => "Không tìm thấy"], 401);
         } else if ($exist == 1){
             Quanly::where('Mã Quản Lý',$id)->delete();
             Account::where('account_id', $id)->delete();
-            return response()->json(['code' => 200, 'message' => "Xoa thanh cong"], 200);
+            return response()->json(['code' => 200, 'message' => "Xóa thành công"], 200);
         }
 
     }

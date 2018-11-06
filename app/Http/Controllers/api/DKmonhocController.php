@@ -72,9 +72,9 @@ class DKmonhocController extends Controller
         ]);
 
         if ($dangky->save()){
-            return response()->json(['code' => 200, 'message' => 'Tao thanh cong']);
+            return response()->json(['code' => 200, 'message' => 'Đăng ký thành không']);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Khong thanh cong']);
+            return response()->json(['code' => 401, 'message' => 'Đăng ký không thành công']);
         }
     }
 
@@ -96,9 +96,9 @@ class DKmonhocController extends Controller
         ]);
 
         if ($dangky->save()){
-            return response()->json(['code' => 200, 'message' => 'Tao thanh cong']);
+            return response()->json(['code' => 200, 'message' => 'Đăng ký thành công']);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Khong thanh cong']);
+            return response()->json(['code' => 401, 'message' => 'Đăng ký không thành công']);
         }
     }
 
@@ -157,10 +157,10 @@ class DKmonhocController extends Controller
     {   
         $dk = DKmonhoc::where('ID',$id);
         if ($dk->count() == 0){
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay']);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy']);
         } else {
             $dk->delete();
-            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong']);
+            return response()->json(['code' => 200, 'message' => 'Xóa thành công']);
         }
     }
 

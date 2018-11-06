@@ -57,9 +57,9 @@ class MonhocController extends Controller
             ]);
 
             $monhoc->save();
-            return response()->json(['code' => 200, 'message' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
         } else {
-            return response()->json(['code' => 422, 'message' => 'Da ton tai'], 422);
+            return response()->json(['code' => 422, 'message' => 'Đã tồn tại'], 422);
         }
     }
 
@@ -109,9 +109,9 @@ class MonhocController extends Controller
         $monhoc = Monhoc::where('mamon',$id);
         if ($monhoc->get()->count() == 1){
             $monhoc->update(['name' => $request->ten,'managerAllow' => $request->bophanquanly]);
-            return response()->json(['code' => 200, 'message' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         }
     }
 
@@ -126,9 +126,9 @@ class MonhocController extends Controller
         $monhoc = Monhoc::where('mamon',$id);
         if ($monhoc->get()->count() == 1){
             $monhoc->delete();
-            return response()->json(['code' => 200, 'message' => 'Xoa thanh cong'], 200);
+            return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         }
     }
 }

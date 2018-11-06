@@ -57,9 +57,9 @@ class TruongtiemnangController extends Controller
             ]);
 
             $truong->save();
-            return response()->json(['code' => 200, 'messsage' => 'Tao thanh cong'], 200);
+            return response()->json(['code' => 200, 'messsage' => 'Tạo thành công'], 200);
         } else {
-            return response()->json(['code' => 422, 'messsage' => 'Da ton tai'], 422);
+            return response()->json(['code' => 422, 'messsage' => 'Đã tồn tại'], 422);
         }
     }
 
@@ -110,10 +110,10 @@ class TruongtiemnangController extends Controller
 
         $truong = Truongtiemnang::where('ID', $id);
         if ($truong->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'messsage' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'messsage' => 'Không tìm thấy'], 401);
         } else {
             $truong->update(['Tên Trường' => $request->ten, 'Địa Điểm' => $request->diadiem, 'Cơ Sở' => $request->coso]);
-            return response()->json(['code' => 200, 'messsage' => 'Cap nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'messsage' => 'Cập nhật thành công'], 200);
         }
     }
 
@@ -127,10 +127,10 @@ class TruongtiemnangController extends Controller
     {
         $truong = Truongtiemnang::where('ID', $id);
         if ($truong->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'messsage' => 'Khong tim thay'], 401);
+            return response()->json(['code' => 401, 'messsage' => 'Không tìm thấy'], 401);
         } else {
             $truong->delete();
-            return response()->json(['code' => 200, 'messsage' => 'Xoa nhat thanh cong'], 200);
+            return response()->json(['code' => 200, 'messsage' => 'Xóa thành công'], 200);
         }
     }
 }

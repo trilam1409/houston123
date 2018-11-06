@@ -114,9 +114,9 @@ class GiaovienController extends Controller
                 'Lý Do Nghỉ' => $request->lydonghi, 'Cơ Sở' => $request->coso]);
             Account::where('account_id',$id)->update(['fullname' => $request->hovaten,'permission' => $request->permission, 'khuvuc' => $request->coso,
                 'available' => $request->available, 'hinhanh' => $request->hinhanh]);
-        return response()->json(['code' => 200, 'message' => 'Tai khoan cap nhat thanh cong']);
+        return response()->json(['code' => 200, 'message' => 'Cập nhật thành công']);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Tai khoan khong ton tai'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         }
 
         
@@ -132,11 +132,11 @@ class GiaovienController extends Controller
     {
         $exist = Giaovien::where('Mã Giáo Viên',$id)->count();
         if($exist == 0){
-            return response()->json(['code' => 401, 'message' => "Tai khoan khong ton tai"], 401);
+            return response()->json(['code' => 401, 'message' => "Không tìm thấy"], 401);
         } else if ($exist == 1){
             Giaovien::where('Mã Giáo Viên',$id)->delete();
             Account::where('account_id', $id)->delete();
-            return response()->json(['code' => 200, 'message' => "Tai khoan da duoc xoa"], 200);
+            return response()->json(['code' => 200, 'message' => "Xóa thành công"], 200);
         }
     }
 }
