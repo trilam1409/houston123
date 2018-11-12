@@ -18,11 +18,10 @@ class AccountController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            // 'account_id' => 'required|string|max:2',
             'fullname' => 'required|string',
             'permission' => 'required|string',
             'khuvuc' => 'required|string',
-            'loginID' => 'required|string|unique:account',
+            'loginID' => 'required|string',
             'loginPASS' => 'required|string'
         ]);
 
@@ -32,7 +31,7 @@ class AccountController extends Controller
             $account_id = 'QL';
         }
 
-        if(Account::where('loginID',$request->loginId)->count() == 0){
+        if(Account::where('loginID',$request->loginID)->count() == 0){
             $acount_id_max = Account::select('account_id')->where('account_id','like', ''.$account_id.'%')->max('account_id');
             $account_id_new = str_pad(substr($acount_id_max,-4) + 1,'6',''.$account_id.'0000', STR_PAD_LEFT);
             $account = new Account([
@@ -59,7 +58,6 @@ class AccountController extends Controller
             'Mã Quản Lý' => 'unique:quanly',
             'available' => 'numeric',
             'hinhanh' => 'string',
-            'loaiquanly' => 'string',
             'sdt' => 'required|string',
             'diachi' => 'required|string',
             'email' => 'email',
@@ -142,8 +140,11 @@ class AccountController extends Controller
         return response()->json(['code' => 200, 'message' => "Đăng xuất thành công"]);
     }
 
-    public function account(Request $request){
+    public function index(Request $request){
         $value = $request->bearerToken();
+        if ($value == null) {
+            return response()->json(['code' => 401, 'message' => 'Không được chứng thực']);
+        }
         $id = (new Parser())->parse($value)->getHeader('jti');
         if(DB::table('oauth_access_tokens')->where('id',$id)->count() == 1){
             $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
@@ -176,7 +177,7 @@ class AccountController extends Controller
             $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
         }
         else{
-            return response()->json(['code' => 401, 'message' => 'Lần đăng nhập trước đã hết hạn'], 401);
+            return response()->json(['code' => 422, 'message' => 'Lần đăng nhập trước đã hết hạn'], 401);
         }
 
         $request->validate([
@@ -190,18 +191,32 @@ class AccountController extends Controller
        
         if (!is_null($pass_verify)){
             if (!Hash::check($request->pass_old, $pass_verify->loginPASS)) {
-                return response()->json(['code' => 400, 'message' => 'Mật khẩu cũ không đúng']);
+                return response()->json(['code' => 422, 'message' => 'Mật khẩu cũ không đúng']);
             }
         } 
 
         if ($request->pass_new != $request->pass_confirm) {
-            return response()->json(['code' => 401, 'message' => 'Mật khẩu xác nhận không trùng nhau']);
+            return response()->json(['code' => 422, 'message' => 'Mật khẩu xác nhận không trùng nhau']);
         } else {
             Account::where('account_id', $account_token->user_id)->update(['loginPASS' => bcrypt($request->pass_new)]);
             return response()->json(['code' => 200, 'message' => 'Thay đổi mật khẩu thành công']);
         }
 
     }
+
+    public function destroy($id){
+        $account = Account::where('account_id',$id);
+        if ($account->count() == 1 ){
+            $account->delete();
+            Quanly::where('Mã Quản Lý',$id)->delete();
+            Giaovien::where('Mã Giáo Viên',$id)->delete();
+            return response()->json(['code' => 200, 'message' => 'Xóa thành công']);
+        } else {
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy']);
+        }
+    }
+
+
     
     public function test(){
         $book = DB::table('giaovien')->paginate(3);

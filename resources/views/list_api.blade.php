@@ -13,108 +13,73 @@
 <body>
     <div class="block-main-content">
         <div class="container">
-            <div class="field-header container">
-            <div class="row">
-                <div class="views-col views-col-1">Method</div>
-                <div class="views-col views-col-2">Url</div>
-                <div class="views-col views-col-3">Header</div>
-                <div class="views-col views-col-4">Params</div>
-                <div class="views-col views-col-5">Json resutl</div>
-                <div class="views-col views-col-6">Describe</div>
-        </div>
+            <div class="field-header container p-0">
+                <div class="row">
+                    <div class="views-col views-col-1">Method</div>
+                    <div class="views-col views-col-2">Url</div>
+                    <div class="views-col views-col-3">Header</div>
+                    <div class="views-col views-col-4">Params</div>
+                    <div class="views-col views-col-5">Json resutl</div>
+                    <div class="views-col views-col-6">Describe</div>
+                </div>
+            </div>
+
+            <div class="field-group field-group-first">
+                <div class="field-title"><p>Account</p></div>
+                <div id="account" class="field-body"></div>
             </div>
             <div class="field-group">
-            <div class="row">
-                <div class="views-col col-12 field-title"><i class="fas fa-plus-circle"></i>Account</div>
+                <div class="field-title"><p>Giáo viên</p></div>
+                <div id="gv" class="field-body"></div>
             </div>
-            <div class="field-body">    
-            <div class="row">
-                <div class="views-col views-col-1"><p class="bg-success text-white text-center rounded">POST</p></div>
-                <div class="views-col views-col-2"><p>/api/register</p></div>
-                <div class="views-col views-col-3"><p>Conten-Type: application/json</p>
-                            <p>X-Requested-With: XMLHttpRequest</p></div>
-                <div class="views-col views-col-4"><p>fullname</p>
-                        <p>permission <span>( giaovien / quanly )</span></p>
-                        <p>khuvuc <span>( /api/coso )</span></p>
-                        <p>loginID</p>
-                        <p>loginPASS</p></div>
-                <div class="views-col views-col-5">{
-                                "code": "200",
-                                "account_id": "QL0148"
-                            }</div>
-                <div class="views-col views-col-6"></div>
+            <div class="field-group">
+                <div class="field-title"><p>Quản lý</p></div>
+                <div id="ql" class="field-body"></div>
             </div>
-
-            <div class="row">
-                <div class="views-col views-col-1"><p class="bg-success text-white text-center rounded">POST</p></div>
-                <div class="views-col views-col-2"><p>/api/register_info</p></div>
-                <div class="views-col views-col-3"><p>Conten-Type: application/json</p>
-                            <p>X-Requested-With: XMLHttpRequest</p></div>
-                <div class="views-col views-col-4"><p>account_id ( QL0148 )</p>
-                        <p>available</p>
-                        <p>hinhanh</p>
-                        <p>sdt</p>
-                        <p>diachi</p>
-                        <p>loaiquanly<span>( /api/loaiql )</span></p>
-                        <p>email</p>
-                        <p>cmnd</p></div>
-                <div class="views-col views-col-5"></div>
-                <div class="views-col views-col-6">Nếu là giáo viên không cần nhập field 'loaiquanly'.</div>
-     
+            <div class="field-group">
+                <div class="field-title"><p>Học viên</p></div>
+                <div id="hocvien" class="field-body"></div>
             </div>
-            <div class="row">
-                <div class="views-col views-col-1"><p class="bg-success text-white text-center rounded">POST</p></div>
-                <div class="views-col views-col-2"><p>/api/login</p></div>
-                <div class="views-col views-col-3"></div>
-                <div class="views-col views-col-4"><p>loginID</p>
-                        <p>loginPASS</p></div>
-                <div class="views-col views-col-5">{"code":200, "token": {token} }</div>
-                <div class="views-col views-col-6"></div>
-     
+            <div class="field-group">
+                <div class="field-title"><p>Cơ sở</p></div>
+                <div id="coso" class="field-body"></div>
             </div>
-
-            <div class="row">
-                <div class="views-col views-col-1"><p class="bg-info text-white text-center rounded">GET</p></div>
-                <div class="views-col views-col-2"><p>/api/account</p></div>
-                <div class="views-col views-col-3"><p>Authorization: Bearer {token}</p></div>
-                <div class="views-col views-col-4"></div>
-                <div class="views-col views-col-5"></div>
-                <div class="views-col views-col-6"></div>
-     
+            <div class="field-group">
+                <div class="field-title"><p>Loại quản lý</p></div>
+                <div id="loaiql" class="field-body"></div>
             </div>
-
-            <div class="row">
-                <div class="views-col views-col-1"><p class="bg-success text-white text-center rounded">POST</p></div>
-                <div class="views-col views-col-2"><p>/api/change_pass</p></div>
-                <div class="views-col views-col-3"><p>Authorization: Bearer {token}</p></div>
-                <div class="views-col views-col-4"><p>pass_old</p>
-                        <p>pass_new</p>
-                        <p>pass_confirm</p></div>
-                <div class="views-col views-col-5"></div>
-                <div class="views-col views-col-6"></div>
-     
+            <div class="field-group">
+                <div class="field-title"><p>Môn học</p></div>
+                <div id="monhoc" class="field-body"></div>
             </div>
-
-            <div class="row">
-                <div class="views-col views-col-1"><p class="bg-info text-white text-center rounded">GET</p></div>
-                <div class="views-col views-col-2"><p>/api/logout</p></div>
-                <div class="views-col views-col-3"><p>Authorization: Bearer {token}</p></div>
-                <div class="views-col views-col-4"></div>
-                <div class="views-col views-col-5"></div>
-                <div class="views-col views-col-6"></div>
-     
+            <div class="field-group">
+                <div class="field-title"><p>Lớp học</p></div>
+                <div id="lophoc" class="field-body"></div>
             </div>
+            <div class="field-group">
+                <div class="field-title"><p>Phòng học</p></div>
+                <div id="phonghoc" class="field-body"></div>
             </div>
+            <!-- <div class="field-group">
+                <div class="field-title"><p>Đăng ký môn học</p></div>
+                <div id="dkmonhoc" class="field-body"></div>
+            </div> -->
+            <div class="field-group">
+                <div class="field-title"><p>Chi tiết lớp học</p></div>
+                <div id="chitietlop" class="field-body"></div>
             </div>
+            <!-- <div class="field-group">
+                <div class="field-title"><p>Chương trình học bổ sung</p></div>
+                <div id="ctrinh_bosung" class="field-body"></div>
+            </div> -->
+        
         </div>
     </div>
-  
-       
-   </div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="  crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{{ mix('js/app.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/script.js') }}"></script>
 </html>

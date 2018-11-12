@@ -23,7 +23,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('register_info', 'AccountController@register_info');
     Route::get('logout', 'AccountController@logout');
     Route::post('change_pass', 'AccountController@changePassword');
-    Route::get('account', 'AccountController@account');
+    Route::resource('account', 'AccountController');
 
     //Route::group(['middleware' => ['AuthenHouston']], function () {
         Route::resource('lophoc', 'LophocController');
