@@ -24,7 +24,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::get('logout', 'AccountController@logout');
     Route::post('change_pass', 'AccountController@changePassword');
     Route::resource('account', 'AccountController');
-
+    Route::post('upload', 'UploadImage@upload');
     //Route::group(['middleware' => ['AuthenHouston']], function () {
         Route::resource('lophoc', 'LophocController');
         Route::resource('loaiql', 'LoaiquanlyController');

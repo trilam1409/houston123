@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('about', function () {
+    return view('about');
+});
+
+
+// Route::post('upload', 'UploadImage@upload');
+
 
 Route::get('api', function () {
     return view('list_api');

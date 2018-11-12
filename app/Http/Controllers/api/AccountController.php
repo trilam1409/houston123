@@ -57,7 +57,7 @@ class AccountController extends Controller
             'account_id' => 'required|string',
             'Mã Quản Lý' => 'unique:quanly',
             'available' => 'numeric',
-            'hinhanh' => 'string',
+            'hinhanh' => 'image',
             'sdt' => 'required|string',
             'diachi' => 'required|string',
             'email' => 'email',
@@ -72,11 +72,12 @@ class AccountController extends Controller
 
         $detail = Account::where('account_id',$request->account_id)->first();
         $type = substr($request->account_id,0,-4);
+        $path_image = $request->file('hinhanh')->store('public/avatar_user');
         if($type == 'QL'){
             $quanly = new Quanly([
                         'Mã Quản Lý' => $request->account_id,
                         'Họ Và Tên' => $detail->fullname,
-                        'Hình Ảnh' => $request->hinhanh,
+                        'Hình Ảnh' => str_replace('public/avatar_user/','', $path_image),
                         'Số Điện Thoại' => $request->sdt,
                         'Địa chỉ' => $request->diachi,
                         'Email' => $request->email,
@@ -86,14 +87,14 @@ class AccountController extends Controller
                     ]);
                 
             $quanly->save();
-            $account = Account::where('account_id',$request->account_id)->update(['available' => $request->available, 'hinhanh' => $request->hinhanh,
+            $account = Account::where('account_id',$request->account_id)->update(['available' => $request->available, 'hinhanh' => str_replace('public/avatar_user/','', $path_image),
          'loaiquanly' => $request->loaiquanly]);
         return response()->json(['code' => 200, 'message' => 'Tạo quản lý thành công']);
         } else if ($type == 'GV'){
             $giaovien = new Giaovien([
                 'Mã Giáo Viên' => $request->account_id,
                 'Họ Và Tên' => $detail->fullname,
-                'Hình Ảnh' => $request->hinhanh,
+                'Hình Ảnh' => str_replace('public/avatar_user/','', $path_image),
                 'Số Điện Thoại' => $request->sdt,
                 'Địa Chỉ' => $request->diachi,
                 'Email' => $request->email,
