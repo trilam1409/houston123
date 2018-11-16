@@ -39,9 +39,18 @@ Route::group(['namespace' => 'api'], function () {
         Route::resource('quanly', 'QuanlyController');
         Route::resource('coso', 'CosoController');
         Route::resource('chuongtrinhbosung', 'ChuongtrinhbosungController');
-        Route::resource('cskh-cu', 'CSKHcuController');
+        //Route::resource('cskh-cu', 'CSKHcuController');
 
     //});
+
+    Route::get('cskh-cu', 'SummaryController@CSKHcu');
+    Route::get('call-hang-ngay', 'SummaryController@callHangNgay');
+    Route::get('call-data', 'SummaryController@callData');
+    Route::get('cskh', 'SummaryController@CSKH');
+    Route::get('data-truong-tiem-nang', 'SummaryController@DataTruongTiemNang');
+    Route::get('data-tuvan', 'SummaryController@datadituvan');
+    Route::get('truong-tiem-nang', 'SummaryController@TruongTiemNang');
+    
 
     Route::get('simple', 'AccountController@test');
 });

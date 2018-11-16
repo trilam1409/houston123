@@ -36162,6 +36162,7 @@ module.exports = function spread(callback) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Marketing", function() { return Marketing; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GV", function() { return GV; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QL", function() { return QL; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HocVien", function() { return HocVien; });
@@ -36190,23 +36191,64 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 
 
-var Account = function (_Component) {
-  _inherits(Account, _Component);
+var Marketing = function (_Component) {
+  _inherits(Marketing, _Component);
 
-  function Account() {
+  function Marketing() {
     var _ref;
 
     var _temp, _this, _ret;
 
-    _classCallCheck(this, Account);
+    _classCallCheck(this, Marketing);
 
     for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Account.__proto__ || Object.getPrototypeOf(Account)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      content: [{ id: 1, method: 'POST', url: '/api/reigster', header: '', params: '{\n "fullname"\n "permission"\n "khuvuc"\n "loginID"\n "loginPASS"\n}', json: '{\n "code": 200,\n "account_id": "QL0148"\n}', des: 'Đăng ký tài khoản' }, { id: 2, method: 'POST', url: '/api/reigster_info', header: '', params: '{\n "account_id"\n "available"\n "hinhanh"\n "sdt"\n "diachi"\n "loaiquanly"\n "email"\n "cmnd"\n}', json: '{\n "code": 200,\n "message": "Tạo giáo viên thành công"\n}\n{\n "code": 200,\n "message": "Tạo quản lý thành công"\n}', des: 'Sau khi đăng ký tài khoản thành công chuyển trang này để khai báo thông tin' }, { id: 3, method: 'POST', url: '/api/login', header: '', params: '{\n "loginID"\n "loginPASS"\n}', json: '{\n "code": 200,\n "token": ""\n}', des: 'Đăng nhập' }, { id: 4, method: 'GET', url: '/api/logout', header: 'Authorization: Bearer <token>', params: '', json: '{\n "code": 200,\n "message": "Đăng xuất thành công"\n}', des: 'Đăng xuất' }, { id: 5, method: 'GET', url: '/api/account', header: 'Authorization: Bearer <token>', params: '', json: '', des: 'Trả về thông tin của tài khoản' }, { id: 6, method: 'POST', url: '/api/change_pass', header: 'Authorization: Bearer <token>', params: '{\n "pass_old"\n "pass_new"\n "pass_confirm"}', json: '{\n "code": 422,\n "message": "Mật khẩu cũ không đúng"\n}\n{\n "code": 422,\n "message": "Mật khẩu xác nhận không trùng nhau"\n}\n{\n "code": 200,\n "message": "Thay đổi mật khẩu thành công"\n}', des: 'Thay đổi mật khẩu' }]
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Marketing.__proto__ || Object.getPrototypeOf(Marketing)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      content: [{ id: 1, method: 'GET', url: '/api/cskh-cu', header: '', params: '', json: '', des: 'Thông tin dữ liệu CSKH cũ' }, { id: 2, method: 'GET', url: '/api/call-hang-ngay', header: '', params: '', json: '', des: 'Thông tin dữ liệu gọi điện hằng ngày' }, { id: 3, method: 'GET', url: '/api/call-data', header: '', params: '', json: '', des: 'Thông tin dữ liệu gọi điện' }, { id: 4, method: 'GET', url: '/api/data-truong-tiem-nang', header: '', params: '', json: '', des: 'Thông tin dữ liệu trường tiềm năng' }, { id: 5, method: 'GET', url: '/api/truong-tiem-nang', header: '', params: '', json: '', des: 'Thông tin trường tiềm năng' }, { id: 6, method: 'GET', url: '/api/data-tuvan', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu đi tư vấn' }, { id: 7, method: 'GET', url: '/api/cskh', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu CSKH' }]
     }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Marketing, [{
+    key: 'render',
+    value: function render() {
+      var content = null;
+      content = __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        this.state.content.map(function (base) {
+          return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2__Base__["a" /* default */], { key: base.id, method: base.method, url: base.url, header: base.header, params: base.params, json: base.json, des: base.des });
+        })
+      );
+      return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+        'div',
+        null,
+        content
+      );
+    }
+  }]);
+
+  return Marketing;
+}(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
+
+var Account = function (_Component2) {
+  _inherits(Account, _Component2);
+
+  function Account() {
+    var _ref2;
+
+    var _temp2, _this2, _ret2;
+
+    _classCallCheck(this, Account);
+
+    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      args[_key2] = arguments[_key2];
+    }
+
+    return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = Account.__proto__ || Object.getPrototypeOf(Account)).call.apply(_ref2, [this].concat(args))), _this2), _this2.state = {
+      content: [{ id: 1, method: 'POST', url: '/api/reigster', header: '', params: '{\n "fullname"\n "permission"\n "khuvuc"\n "loginID"\n "loginPASS"\n}', json: '{\n "code": 200,\n "account_id": "QL0148"\n}', des: 'Đăng ký tài khoản' }, { id: 2, method: 'POST', url: '/api/reigster_info', header: '', params: '{\n "account_id"\n "available"\n "hinhanh"\n "sdt"\n "diachi"\n "loaiquanly"\n "email"\n "cmnd"\n}', json: '{\n "code": 200,\n "message": "Tạo giáo viên thành công"\n}\n{\n "code": 200,\n "message": "Tạo quản lý thành công"\n}', des: 'Sau khi đăng ký tài khoản thành công chuyển trang này để khai báo thông tin' }, { id: 3, method: 'POST', url: '/api/login', header: '', params: '{\n "loginID"\n "loginPASS"\n}', json: '{\n "code": 200,\n "token": ""\n}', des: 'Đăng nhập' }, { id: 4, method: 'GET', url: '/api/logout', header: 'Authorization: Bearer <token>', params: '', json: '{\n "code": 200,\n "message": "Đăng xuất thành công"\n}', des: 'Đăng xuất' }, { id: 5, method: 'GET', url: '/api/account', header: 'Authorization: Bearer <token>', params: '', json: '', des: 'Trả về thông tin của tài khoản' }, { id: 6, method: 'POST', url: '/api/change_pass', header: 'Authorization: Bearer <token>', params: '{\n "pass_old"\n "pass_new"\n "pass_confirm"\n}', json: '{\n "code": 422,\n "message": "Mật khẩu cũ không đúng"\n}\n{\n "code": 422,\n "message": "Mật khẩu xác nhận không trùng nhau"\n}\n{\n "code": 200,\n "message": "Thay đổi mật khẩu thành công"\n}', des: 'Thay đổi mật khẩu' }]
+    }, _temp2), _possibleConstructorReturn(_this2, _ret2);
   }
 
   _createClass(Account, [{
@@ -36234,24 +36276,24 @@ var Account = function (_Component) {
 /* harmony default export */ __webpack_exports__["default"] = (Account);
 
 
-var GV = function (_Component2) {
-  _inherits(GV, _Component2);
+var GV = function (_Component3) {
+  _inherits(GV, _Component3);
 
   function GV() {
-    var _ref2;
+    var _ref3;
 
-    var _temp2, _this2, _ret2;
+    var _temp3, _this3, _ret3;
 
     _classCallCheck(this, GV);
 
-    for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      args[_key2] = arguments[_key2];
+    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+      args[_key3] = arguments[_key3];
     }
 
-    return _ret2 = (_temp2 = (_this2 = _possibleConstructorReturn(this, (_ref2 = GV.__proto__ || Object.getPrototypeOf(GV)).call.apply(_ref2, [this].concat(args))), _this2), _this2.state = {
+    return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, (_ref3 = GV.__proto__ || Object.getPrototypeOf(GV)).call.apply(_ref3, [this].concat(args))), _this3), _this3.state = {
       content: [{ id: 1, method: 'GET', url: '/api/giaovien', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/giaovien/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'PUT', url: '/api/giaovien/{id}', header: 'Content-type: application/json\nX-Requested-With: XMLHttpRequest', params: '{\n "hovaten"\n "hinhanh"\n "permission"\n "available"\n "sdt"\n "diachi"\n "email"\n "cmnd"\n "coso"\n "ngaynghi"\n "lydonghi"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 4, method: 'DELETE', url: '/api/giaovien/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
 
-    }, _temp2), _possibleConstructorReturn(_this2, _ret2);
+    }, _temp3), _possibleConstructorReturn(_this3, _ret3);
   }
 
   _createClass(GV, [{
@@ -36276,23 +36318,23 @@ var GV = function (_Component2) {
   return GV;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var QL = function (_Component3) {
-  _inherits(QL, _Component3);
+var QL = function (_Component4) {
+  _inherits(QL, _Component4);
 
   function QL() {
-    var _ref3;
+    var _ref4;
 
-    var _temp3, _this3, _ret3;
+    var _temp4, _this4, _ret4;
 
     _classCallCheck(this, QL);
 
-    for (var _len3 = arguments.length, args = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-      args[_key3] = arguments[_key3];
+    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
+      args[_key4] = arguments[_key4];
     }
 
-    return _ret3 = (_temp3 = (_this3 = _possibleConstructorReturn(this, (_ref3 = QL.__proto__ || Object.getPrototypeOf(QL)).call.apply(_ref3, [this].concat(args))), _this3), _this3.state = {
+    return _ret4 = (_temp4 = (_this4 = _possibleConstructorReturn(this, (_ref4 = QL.__proto__ || Object.getPrototypeOf(QL)).call.apply(_ref4, [this].concat(args))), _this4), _this4.state = {
       content: [{ id: 1, method: 'GET', url: '/api/quanly', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/quanly/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'PUT', url: '/api/quanly/{id}', header: '', params: '{\n "hovaten"\n "hinhanh"\n "permission"\n "available"\n "sdt"\n "diachi"\n "email"\n "cmnd"\n "chucvu"\n "coso"\n "ngaynghi"\n "lydonghi"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 4, method: 'DELETE', url: '/api/quanly/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp3), _possibleConstructorReturn(_this3, _ret3);
+    }, _temp4), _possibleConstructorReturn(_this4, _ret4);
   }
 
   _createClass(QL, [{
@@ -36317,25 +36359,25 @@ var QL = function (_Component3) {
   return QL;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var HocVien = function (_Component4) {
-  _inherits(HocVien, _Component4);
+var HocVien = function (_Component5) {
+  _inherits(HocVien, _Component5);
 
   function HocVien() {
-    var _ref4;
+    var _ref5;
 
-    var _temp4, _this4, _ret4;
+    var _temp5, _this5, _ret5;
 
     _classCallCheck(this, HocVien);
 
-    for (var _len4 = arguments.length, args = Array(_len4), _key4 = 0; _key4 < _len4; _key4++) {
-      args[_key4] = arguments[_key4];
+    for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
+      args[_key5] = arguments[_key5];
     }
 
-    return _ret4 = (_temp4 = (_this4 = _possibleConstructorReturn(this, (_ref4 = HocVien.__proto__ || Object.getPrototypeOf(HocVien)).call.apply(_ref4, [this].concat(args))), _this4), _this4.state = {
+    return _ret5 = (_temp5 = (_this5 = _possibleConstructorReturn(this, (_ref5 = HocVien.__proto__ || Object.getPrototypeOf(HocVien)).call.apply(_ref5, [this].concat(args))), _this5), _this5.state = {
       content: [{ id: 1, method: 'GET', url: '/api/hocvien', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/hocvien/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/hocvien', header: '', params: '{\n "hovaten"\n "hinhanh"\n "lop"\n "sdt"\n "diachi"\n "ngaysinh"\n "hoclucvao"\n" ngaynhaphoc"\n "truonghocchinh"\n "hohang"\n "tenNT1"\n "ngheNT1"\n "sdtNT1"\n "tenNT2"\n "ngheNT2"\n "sdtNT2"\n "lydobietHouston"\n "chinhthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' },
       //{id: 4, method: 'POST', url: '/api/hocvien{id}', header: '', params: '{\n "hovaten"\n "hinhanh"\n "lop"\n "sdt"\n "diachi"\n "ngaysinh"\n "hoclucvao"\n" ngaynhaphoc"\n "truonghocchinh"\n "hohang"\n "tenNT1"\n "ngheNT1"\n "sdtNT1"\n "tenNT2"\n "ngheNT2"\n "sdtNT2"\n "lydobietHouston"\n "chinhthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật'},
       { id: 5, method: 'DELETE', url: '/api/hocvien/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp4), _possibleConstructorReturn(_this4, _ret4);
+    }, _temp5), _possibleConstructorReturn(_this5, _ret5);
   }
 
   _createClass(HocVien, [{
@@ -36360,23 +36402,23 @@ var HocVien = function (_Component4) {
   return HocVien;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var CoSo = function (_Component5) {
-  _inherits(CoSo, _Component5);
+var CoSo = function (_Component6) {
+  _inherits(CoSo, _Component6);
 
   function CoSo() {
-    var _ref5;
+    var _ref6;
 
-    var _temp5, _this5, _ret5;
+    var _temp6, _this6, _ret6;
 
     _classCallCheck(this, CoSo);
 
-    for (var _len5 = arguments.length, args = Array(_len5), _key5 = 0; _key5 < _len5; _key5++) {
-      args[_key5] = arguments[_key5];
+    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
+      args[_key6] = arguments[_key6];
     }
 
-    return _ret5 = (_temp5 = (_this5 = _possibleConstructorReturn(this, (_ref5 = CoSo.__proto__ || Object.getPrototypeOf(CoSo)).call.apply(_ref5, [this].concat(args))), _this5), _this5.state = {
+    return _ret6 = (_temp6 = (_this6 = _possibleConstructorReturn(this, (_ref6 = CoSo.__proto__ || Object.getPrototypeOf(CoSo)).call.apply(_ref6, [this].concat(args))), _this6), _this6.state = {
       content: [{ id: 1, method: 'GET', url: '/api/coso', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/coso/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/coso', header: '', params: '{\n "macoso"\n "tencoso"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/coso/{id}', header: '', params: '{\n "tencoso"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/coso/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp5), _possibleConstructorReturn(_this5, _ret5);
+    }, _temp6), _possibleConstructorReturn(_this6, _ret6);
   }
 
   _createClass(CoSo, [{
@@ -36401,23 +36443,23 @@ var CoSo = function (_Component5) {
   return CoSo;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var LoaiQL = function (_Component6) {
-  _inherits(LoaiQL, _Component6);
+var LoaiQL = function (_Component7) {
+  _inherits(LoaiQL, _Component7);
 
   function LoaiQL() {
-    var _ref6;
+    var _ref7;
 
-    var _temp6, _this6, _ret6;
+    var _temp7, _this7, _ret7;
 
     _classCallCheck(this, LoaiQL);
 
-    for (var _len6 = arguments.length, args = Array(_len6), _key6 = 0; _key6 < _len6; _key6++) {
-      args[_key6] = arguments[_key6];
+    for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
+      args[_key7] = arguments[_key7];
     }
 
-    return _ret6 = (_temp6 = (_this6 = _possibleConstructorReturn(this, (_ref6 = LoaiQL.__proto__ || Object.getPrototypeOf(LoaiQL)).call.apply(_ref6, [this].concat(args))), _this6), _this6.state = {
+    return _ret7 = (_temp7 = (_this7 = _possibleConstructorReturn(this, (_ref7 = LoaiQL.__proto__ || Object.getPrototypeOf(LoaiQL)).call.apply(_ref7, [this].concat(args))), _this7), _this7.state = {
       content: [{ id: 1, method: 'GET', url: '/api/loaiql', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/loaiql/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/loaiql', header: '', params: '{\n "loaiquanly"\n "permission_allow"\n "permission"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/loaiql/{loaiquanly}', header: '', params: '{\n "permission_allow"\n "permission"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/loaiql/{loaiquanly}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp6), _possibleConstructorReturn(_this6, _ret6);
+    }, _temp7), _possibleConstructorReturn(_this7, _ret7);
   }
 
   _createClass(LoaiQL, [{
@@ -36442,23 +36484,23 @@ var LoaiQL = function (_Component6) {
   return LoaiQL;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var MonHoc = function (_Component7) {
-  _inherits(MonHoc, _Component7);
+var MonHoc = function (_Component8) {
+  _inherits(MonHoc, _Component8);
 
   function MonHoc() {
-    var _ref7;
+    var _ref8;
 
-    var _temp7, _this7, _ret7;
+    var _temp8, _this8, _ret8;
 
     _classCallCheck(this, MonHoc);
 
-    for (var _len7 = arguments.length, args = Array(_len7), _key7 = 0; _key7 < _len7; _key7++) {
-      args[_key7] = arguments[_key7];
+    for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
+      args[_key8] = arguments[_key8];
     }
 
-    return _ret7 = (_temp7 = (_this7 = _possibleConstructorReturn(this, (_ref7 = MonHoc.__proto__ || Object.getPrototypeOf(MonHoc)).call.apply(_ref7, [this].concat(args))), _this7), _this7.state = {
+    return _ret8 = (_temp8 = (_this8 = _possibleConstructorReturn(this, (_ref8 = MonHoc.__proto__ || Object.getPrototypeOf(MonHoc)).call.apply(_ref8, [this].concat(args))), _this8), _this8.state = {
       content: [{ id: 1, method: 'GET', url: '/api/monhoc', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/monhoc/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/monhoc', header: '', params: '{\n "ma"\n "ten"\n "bophanquanly"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/monhoc/{id}', header: '', params: '{\n "ten"\n "bophanquanly"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/monhoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp7), _possibleConstructorReturn(_this7, _ret7);
+    }, _temp8), _possibleConstructorReturn(_this8, _ret8);
   }
 
   _createClass(MonHoc, [{
@@ -36483,23 +36525,23 @@ var MonHoc = function (_Component7) {
   return MonHoc;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var LopHoc = function (_Component8) {
-  _inherits(LopHoc, _Component8);
+var LopHoc = function (_Component9) {
+  _inherits(LopHoc, _Component9);
 
   function LopHoc() {
-    var _ref8;
+    var _ref9;
 
-    var _temp8, _this8, _ret8;
+    var _temp9, _this9, _ret9;
 
     _classCallCheck(this, LopHoc);
 
-    for (var _len8 = arguments.length, args = Array(_len8), _key8 = 0; _key8 < _len8; _key8++) {
-      args[_key8] = arguments[_key8];
+    for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
+      args[_key9] = arguments[_key9];
     }
 
-    return _ret8 = (_temp8 = (_this8 = _possibleConstructorReturn(this, (_ref8 = LopHoc.__proto__ || Object.getPrototypeOf(LopHoc)).call.apply(_ref8, [this].concat(args))), _this8), _this8.state = {
-      content: [{ id: 1, method: 'GET', url: '/api/lophoc', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/lophoc/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/lophoc', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc" "coso"}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/lophoc/{id}', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc" "coso"}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/lophoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp8), _possibleConstructorReturn(_this8, _ret8);
+    return _ret9 = (_temp9 = (_this9 = _possibleConstructorReturn(this, (_ref9 = LopHoc.__proto__ || Object.getPrototypeOf(LopHoc)).call.apply(_ref9, [this].concat(args))), _this9), _this9.state = {
+      content: [{ id: 1, method: 'GET', url: '/api/lophoc', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/lophoc/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/lophoc', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/lophoc/{id}', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/lophoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
+    }, _temp9), _possibleConstructorReturn(_this9, _ret9);
   }
 
   _createClass(LopHoc, [{
@@ -36524,23 +36566,23 @@ var LopHoc = function (_Component8) {
   return LopHoc;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var PhongHoc = function (_Component9) {
-  _inherits(PhongHoc, _Component9);
+var PhongHoc = function (_Component10) {
+  _inherits(PhongHoc, _Component10);
 
   function PhongHoc() {
-    var _ref9;
+    var _ref10;
 
-    var _temp9, _this9, _ret9;
+    var _temp10, _this10, _ret10;
 
     _classCallCheck(this, PhongHoc);
 
-    for (var _len9 = arguments.length, args = Array(_len9), _key9 = 0; _key9 < _len9; _key9++) {
-      args[_key9] = arguments[_key9];
+    for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
+      args[_key10] = arguments[_key10];
     }
 
-    return _ret9 = (_temp9 = (_this9 = _possibleConstructorReturn(this, (_ref9 = PhongHoc.__proto__ || Object.getPrototypeOf(PhongHoc)).call.apply(_ref9, [this].concat(args))), _this9), _this9.state = {
+    return _ret10 = (_temp10 = (_this10 = _possibleConstructorReturn(this, (_ref10 = PhongHoc.__proto__ || Object.getPrototypeOf(PhongHoc)).call.apply(_ref10, [this].concat(args))), _this10), _this10.state = {
       content: [{ id: 1, method: 'GET', url: '/api/phonghoc', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/phonghoc/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/phonghoc', header: '', params: '{\n "coso"\n "succhua"\n "ghichu"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/apiphonghoc/{id}', header: '', params: '{\n "succhua"\n "ghichu"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/phonghoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp9), _possibleConstructorReturn(_this9, _ret9);
+    }, _temp10), _possibleConstructorReturn(_this10, _ret10);
   }
 
   _createClass(PhongHoc, [{
@@ -36565,23 +36607,23 @@ var PhongHoc = function (_Component9) {
   return PhongHoc;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var DkMonHoc = function (_Component10) {
-  _inherits(DkMonHoc, _Component10);
+var DkMonHoc = function (_Component11) {
+  _inherits(DkMonHoc, _Component11);
 
   function DkMonHoc() {
-    var _ref10;
+    var _ref11;
 
-    var _temp10, _this10, _ret10;
+    var _temp11, _this11, _ret11;
 
     _classCallCheck(this, DkMonHoc);
 
-    for (var _len10 = arguments.length, args = Array(_len10), _key10 = 0; _key10 < _len10; _key10++) {
-      args[_key10] = arguments[_key10];
+    for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
+      args[_key11] = arguments[_key11];
     }
 
-    return _ret10 = (_temp10 = (_this10 = _possibleConstructorReturn(this, (_ref10 = DkMonHoc.__proto__ || Object.getPrototypeOf(DkMonHoc)).call.apply(_ref10, [this].concat(args))), _this10), _this10.state = {
+    return _ret11 = (_temp11 = (_this11 = _possibleConstructorReturn(this, (_ref11 = DkMonHoc.__proto__ || Object.getPrototypeOf(DkMonHoc)).call.apply(_ref11, [this].concat(args))), _this11), _this11.state = {
       content: [{ id: 1, method: 'GET', url: '/api/phonghoc', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/phonghoc/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/phonghoc', header: '', params: '{\n "coso"\n "succhua"\n "ghichu"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/phonghoc/{id}', header: '', params: '{\n "succhua"\n "ghichu"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/phonghoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp10), _possibleConstructorReturn(_this10, _ret10);
+    }, _temp11), _possibleConstructorReturn(_this11, _ret11);
   }
 
   _createClass(DkMonHoc, [{
@@ -36606,23 +36648,23 @@ var DkMonHoc = function (_Component10) {
   return DkMonHoc;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var ChiTietLop = function (_Component11) {
-  _inherits(ChiTietLop, _Component11);
+var ChiTietLop = function (_Component12) {
+  _inherits(ChiTietLop, _Component12);
 
   function ChiTietLop() {
-    var _ref11;
+    var _ref12;
 
-    var _temp11, _this11, _ret11;
+    var _temp12, _this12, _ret12;
 
     _classCallCheck(this, ChiTietLop);
 
-    for (var _len11 = arguments.length, args = Array(_len11), _key11 = 0; _key11 < _len11; _key11++) {
-      args[_key11] = arguments[_key11];
+    for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
+      args[_key12] = arguments[_key12];
     }
 
-    return _ret11 = (_temp11 = (_this11 = _possibleConstructorReturn(this, (_ref11 = ChiTietLop.__proto__ || Object.getPrototypeOf(ChiTietLop)).call.apply(_ref11, [this].concat(args))), _this11), _this11.state = {
+    return _ret12 = (_temp12 = (_this12 = _possibleConstructorReturn(this, (_ref12 = ChiTietLop.__proto__ || Object.getPrototypeOf(ChiTietLop)).call.apply(_ref12, [this].concat(args))), _this12), _this12.state = {
       content: [{ id: 1, method: 'GET', url: '/api/chitietlop', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/chitietlop/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/chitietlop', header: '', params: '{\n "mahocvien"\n "malop"\n "machuyenlop"\n "thoigianchuyen"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/chitietlop/{id}', header: '', params: '{\n "mahocvien"\n "malop"\n "machuyenlop"\n "thoigianchuyen"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/chitietlop/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp11), _possibleConstructorReturn(_this11, _ret11);
+    }, _temp12), _possibleConstructorReturn(_this12, _ret12);
   }
 
   _createClass(ChiTietLop, [{
@@ -36647,23 +36689,23 @@ var ChiTietLop = function (_Component11) {
   return ChiTietLop;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
-var CTrinhBoSung = function (_Component12) {
-  _inherits(CTrinhBoSung, _Component12);
+var CTrinhBoSung = function (_Component13) {
+  _inherits(CTrinhBoSung, _Component13);
 
   function CTrinhBoSung() {
-    var _ref12;
+    var _ref13;
 
-    var _temp12, _this12, _ret12;
+    var _temp13, _this13, _ret13;
 
     _classCallCheck(this, CTrinhBoSung);
 
-    for (var _len12 = arguments.length, args = Array(_len12), _key12 = 0; _key12 < _len12; _key12++) {
-      args[_key12] = arguments[_key12];
+    for (var _len13 = arguments.length, args = Array(_len13), _key13 = 0; _key13 < _len13; _key13++) {
+      args[_key13] = arguments[_key13];
     }
 
-    return _ret12 = (_temp12 = (_this12 = _possibleConstructorReturn(this, (_ref12 = CTrinhBoSung.__proto__ || Object.getPrototypeOf(CTrinhBoSung)).call.apply(_ref12, [this].concat(args))), _this12), _this12.state = {
+    return _ret13 = (_temp13 = (_this13 = _possibleConstructorReturn(this, (_ref13 = CTrinhBoSung.__proto__ || Object.getPrototypeOf(CTrinhBoSung)).call.apply(_ref13, [this].concat(args))), _this13), _this13.state = {
       content: [{ id: 1, method: 'GET', url: '/api/chitietlop', header: '', params: '', json: '', des: 'Lấy toàn bộ' }, { id: 2, method: 'GET', url: '/api/chitietlop/{str}', header: '', params: '', json: '', des: 'Tìm kiếm' }, { id: 3, method: 'POST', url: '/api/chitietlop', header: '', params: '{\n "mahocvien"\n "malop"\n "machuyenlop"\n "thoigianchuyen"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới' }, { id: 4, method: 'PUT', url: '/api/chitietlop/{id}', header: '', params: '{\n "mahocvien"\n "malop"\n "machuyenlop"\n "thoigianchuyen"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật' }, { id: 5, method: 'DELETE', url: '/api/chitietlop/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa' }]
-    }, _temp12), _possibleConstructorReturn(_this12, _ret12);
+    }, _temp13), _possibleConstructorReturn(_this13, _ret13);
   }
 
   _createClass(CTrinhBoSung, [{
@@ -36688,6 +36730,9 @@ var CTrinhBoSung = function (_Component12) {
   return CTrinhBoSung;
 }(__WEBPACK_IMPORTED_MODULE_0_react__["Component"]);
 
+if (document.getElementById('marketing')) {
+  __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Marketing, null), document.getElementById('marketing'));
+}
 if (document.getElementById('account')) {
   __WEBPACK_IMPORTED_MODULE_1_react_dom___default.a.render(__WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(Account, null), document.getElementById('account'));
 }
@@ -59465,8 +59510,8 @@ var base = function base(props) {
             "div",
             { "class": "views-col views-col-2" },
             __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-                "pre",
-                null,
+                "a",
+                { href: props.url, target: "blank" },
                 props.url
             )
         ),

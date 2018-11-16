@@ -2,6 +2,37 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Base from './Base';
 
+export class Marketing extends Component {
+  state = {
+    content: [
+      {id: 1, method: 'GET', url: '/api/cskh-cu', header: '', params: '', json: '', des: 'Thông tin dữ liệu CSKH cũ'},
+      {id: 2, method: 'GET', url: '/api/call-hang-ngay', header: '', params: '', json: '', des: 'Thông tin dữ liệu gọi điện hằng ngày'},
+      {id: 3, method: 'GET', url: '/api/call-data', header: '', params: '', json: '', des: 'Thông tin dữ liệu gọi điện'},
+      {id: 4, method: 'GET', url: '/api/data-truong-tiem-nang', header: '', params: '', json: '', des: 'Thông tin dữ liệu trường tiềm năng'},
+      {id: 5, method: 'GET', url: '/api/truong-tiem-nang', header: '', params: '', json: '', des: 'Thông tin trường tiềm năng'},
+      {id: 6, method: 'GET', url: '/api/data-tuvan', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu đi tư vấn'},
+      {id: 7, method: 'GET', url: '/api/cskh', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu CSKH'}
+
+    
+    ] 
+  }
+  render() {
+    let content = null;
+    content = (
+      <div>
+        {this.state.content.map((base) => {
+          return <Base key={base.id} method={base.method} url={base.url} header={base.header} params={base.params} json={base.json} des={base.des} />
+        })}
+      </div>
+    );
+    return(
+      <div>
+        {content}
+      </div>
+    );  
+  } 
+}
+
 export default class Account extends Component {
   state = {
     content: [
@@ -10,7 +41,7 @@ export default class Account extends Component {
       {id: 3, method: 'POST', url: '/api/login', header: '', params: '{\n "loginID"\n "loginPASS"\n}', json: '{\n "code": 200,\n "token": ""\n}', des: 'Đăng nhập'},
       {id: 4, method: 'GET', url: '/api/logout', header: 'Authorization: Bearer <token>', params:'', json: '{\n "code": 200,\n "message": "Đăng xuất thành công"\n}', des: 'Đăng xuất'},
       {id: 5, method: 'GET', url: '/api/account', header: 'Authorization: Bearer <token>', params: '', json: '', des: 'Trả về thông tin của tài khoản'},
-      {id: 6, method: 'POST', url: '/api/change_pass', header: 'Authorization: Bearer <token>', params: '{\n "pass_old"\n "pass_new"\n "pass_confirm"}', json: '{\n "code": 422,\n "message": "Mật khẩu cũ không đúng"\n}\n{\n "code": 422,\n "message": "Mật khẩu xác nhận không trùng nhau"\n}\n{\n "code": 200,\n "message": "Thay đổi mật khẩu thành công"\n}', des: 'Thay đổi mật khẩu'},
+      {id: 6, method: 'POST', url: '/api/change_pass', header: 'Authorization: Bearer <token>', params: '{\n "pass_old"\n "pass_new"\n "pass_confirm"\n}', json: '{\n "code": 422,\n "message": "Mật khẩu cũ không đúng"\n}\n{\n "code": 422,\n "message": "Mật khẩu xác nhận không trùng nhau"\n}\n{\n "code": 200,\n "message": "Thay đổi mật khẩu thành công"\n}', des: 'Thay đổi mật khẩu'},
 
     ] 
   }
@@ -203,9 +234,9 @@ export class LopHoc extends Component {
     content: [
       {id: 1, method: 'GET', url: '/api/lophoc', header: '', params: '', json: '', des: 'Lấy toàn bộ'},
       {id: 2, method: 'GET', url: '/api/lophoc/{str}', header: '', params: '', json: '', des: 'Tìm kiếm'},
-      {id: 3, method: 'POST', url: '/api/lophoc', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc" "coso"}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới'},
-      {id: 4, method: 'PUT', url: '/api/lophoc/{id}', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc" "coso"}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật'},
-      {id: 5, method: 'DELETE', url: '/api/lophoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa'},
+      {id: 3, method: 'POST', url: '/api/lophoc', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới'},
+      {id: 4, method: 'PUT', url: '/api/lophoc/{id}', header: '', params: '{\n "lop"\n "mamonhoc"\n "magiaovien"\n "batdau"\n "ketthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật'},
+      {id: 5, method: 'DELETE', url: '/api/lophoc/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa'}
     ] 
   }
   render() {
@@ -333,6 +364,11 @@ export class CTrinhBoSung extends Component {
   } 
 }
 
+
+
+if (document.getElementById('marketing')) {
+  ReactDOM.render(<Marketing />, document.getElementById('marketing'));
+}
 if (document.getElementById('account')) {
   ReactDOM.render(<Account />, document.getElementById('account'));
 }
