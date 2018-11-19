@@ -39,6 +39,7 @@ Route::group(['namespace' => 'api'], function () {
         Route::resource('quanly', 'QuanlyController');
         Route::resource('coso', 'CosoController');
         Route::resource('chuongtrinhbosung', 'ChuongtrinhbosungController');
+        Route::resource('to-roi', 'ThongTinToRoiController');
         //Route::resource('cskh-cu', 'CSKHcuController');
 
     //});

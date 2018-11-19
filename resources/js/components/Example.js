@@ -5,13 +5,14 @@ import Base from './Base';
 export class Marketing extends Component {
   state = {
     content: [
-      {id: 1, method: 'GET', url: '/api/cskh-cu', header: '', params: '', json: '', des: 'Thông tin dữ liệu CSKH cũ'},
+      {id: 1, method: 'GET', url: '/api/to-roi', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu CSKH'},
       {id: 2, method: 'GET', url: '/api/call-hang-ngay', header: '', params: '', json: '', des: 'Thông tin dữ liệu gọi điện hằng ngày'},
       {id: 3, method: 'GET', url: '/api/call-data', header: '', params: '', json: '', des: 'Thông tin dữ liệu gọi điện'},
       {id: 4, method: 'GET', url: '/api/data-truong-tiem-nang', header: '', params: '', json: '', des: 'Thông tin dữ liệu trường tiềm năng'},
       {id: 5, method: 'GET', url: '/api/truong-tiem-nang', header: '', params: '', json: '', des: 'Thông tin trường tiềm năng'},
       {id: 6, method: 'GET', url: '/api/data-tuvan', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu đi tư vấn'},
-      {id: 7, method: 'GET', url: '/api/cskh', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu CSKH'}
+      {id: 7, method: 'GET', url: '/api/cskh', header: '', params: '', json: '', des: '(NULL) Thông tin dữ liệu CSKH'},
+      {id: 8, method: 'GET', url: '/api/cskh-cu', header: '', params: '', json: '', des: 'Thông tin dữ liệu CSKH cũ'}
 
     
     ] 
