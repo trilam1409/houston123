@@ -139,10 +139,6 @@ class LophocController extends Controller
             'branch' => $request->coso]);
             return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         }
-        
-        
-
-            
     }
 
     /**

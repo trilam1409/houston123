@@ -139,4 +139,23 @@ class DanhsachlopController extends Controller
             return response()->json(['code' => 200, 'message' => 'Xóa thành công'],200);
         }
     }
+
+    public function classNullStudent($id){
+        $lophoc = Danhsachlop::where('User ID','!=' ,$id);
+        if ($lophoc->count() == 0 ){
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy lớp']);
+        } else {
+            $lophoc = $lophoc->groupBy('danhsachhocsinhtronglop.Mã Lớp')
+            ->join('lophoc','danhsachhocsinhtronglop.Mã Lớp','=','lophoc.Mã Lớp')
+            ->join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')
+            ->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
+            ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
+            ->select('lophoc.*', 'coso.Tên Cơ Sở','danhsachmonhoc.name','giaovien.Họ Và Tên')->paginate(15);
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($lophoc);
+            return response()->json($data)->header('charset','utf-8');
+        }
+    }
 }
+
+ 
