@@ -42,6 +42,8 @@ Route::group(['namespace' => 'api'], function () {
         Route::resource('to-roi', 'ThongTinToRoiController');
         //Route::resource('cskh-cu', 'CSKHcuController');
         Route::get('lop-hv-trong/{id}', 'DanhsachlopController@classNullStudent');
+        Route::get('lop-gv-trong/{id}', 'LophocController@classNullTeacher');
+        
     //});
 
     Route::get('cskh-cu', 'SummaryController@CSKHcu');

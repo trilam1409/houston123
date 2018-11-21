@@ -18,12 +18,22 @@ class DanhsachlopController extends Controller
         if (Danhsachlop::get()->count() == 0 ){
             return response()->json(['code' => 401], 401);
         } else {
-            $ds = Danhsachlop::paginate(15);
+            $ds = Danhsachlop::join('users', 'danhsachhocsinhtronglop.User ID', '=', 'users.User ID')
+            ->join('lophoc', 'danhsachhocsinhtronglop.Mã Lớp', '=', 'lophoc.Mã Lớp')
+            ->join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')
+            ->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
+            ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
+            ->select('lophoc.*', 'coso.Tên Cơ Sở', 'danhsachmonhoc.name', 'giaovien.Họ Và Tên', 'danhsachhocsinhtronglop.*', 'users.Họ Và Tên')
+            ->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($ds);
             return response()->json($data)->header('charset','utf-8');
         }
     }
+
+   
+    
+
 
     /**
      * Show the form for creating a new resource.
@@ -70,11 +80,17 @@ class DanhsachlopController extends Controller
      */
     public function show($str)
     {   
-        $ds = Danhsachlop::where('User ID', 'like', '%'.$str.'%')->orwhere('Mã Lớp','like','%'.$str.'%');
+        $ds = Danhsachlop::where('danhsachhocsinhtronglop.User ID', 'like', '%'.$str.'%')->orwhere('danhsachhocsinhtronglop.Mã Lớp','like','%'.$str.'%');
         if ($ds->get()->count() == 0 ){
             return response()->json(['code' => 401]);
         } else {
-            $ds = $ds->paginate(15);
+            $ds = $ds->join('users', 'danhsachhocsinhtronglop.User ID', '=', 'users.User ID')
+            ->join('lophoc', 'danhsachhocsinhtronglop.Mã Lớp', '=', 'lophoc.Mã Lớp')
+            ->join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')
+            ->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
+            ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
+            ->select('lophoc.*', 'coso.Tên Cơ Sở', 'danhsachmonhoc.name', 'giaovien.Họ Và Tên', 'danhsachhocsinhtronglop.*', 'users.Họ Và Tên')
+            ->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($ds);
             return response()->json($data)->header('charset','utf-8');
@@ -156,6 +172,8 @@ class DanhsachlopController extends Controller
             return response()->json($data)->header('charset','utf-8');
         }
     }
+
+   
 }
 
  
