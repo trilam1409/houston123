@@ -16,7 +16,8 @@ class SummaryController extends Controller
     }
 
     public function callHangNgay(){
-        $temp = DB::table('calldangkyhangngay')->paginate(15);
+        $temp = DB::table('calldangkyhangngay')->join('datadangkyhangngay','calldangkyhangngay.ID-DATA','=','datadangkyhangngay.ID')
+        ->select('calldangkyhangngay.*','datadangkyhangngay.*')->paginate(15);
         $custom = collect(['code' => 200]);
         $data = $custom->merge($temp);
         return response()->json($data)->header('charset','utf-8');
@@ -24,7 +25,8 @@ class SummaryController extends Controller
 
     
     public function callData(){
-        $temp = DB::table('calldata')->paginate(15);
+        $temp = DB::table('calldata')->join('data_truongtiemnang','calldata.ID-DATA','=','data_truongtiemnang.ID')
+        ->select('calldata.*','data_truongtiemnang.*')->paginate(15);
         $custom = collect(['code' => 200]);
         $data = $custom->merge($temp);
         return response()->json($data)->header('charset','utf-8');

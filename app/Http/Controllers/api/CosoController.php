@@ -20,7 +20,7 @@ class CosoController extends Controller
             $coso = Coso::paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($coso);
-            return response()->json($data)->header('charset', 'utf-8');
+            return response()->json($data)->header('charset', 'utf-8')->header('Access-Control-Allow-Origin', '*');
         }
         
     }
