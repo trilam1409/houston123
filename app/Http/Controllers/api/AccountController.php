@@ -178,7 +178,7 @@ class AccountController extends Controller
             $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
         }
         else{
-            return response()->json(['code' => 422, 'message' => 'Lần đăng nhập trước đã hết hạn'], 401);
+            return response()->json(['code' => 422, 'message' => 'Lần đăng nhập trước đã hết hạn'], 422);
         }
 
         $request->validate([
@@ -192,15 +192,15 @@ class AccountController extends Controller
        
         if (!is_null($pass_verify)){
             if (!Hash::check($request->pass_old, $pass_verify->loginPASS)) {
-                return response()->json(['code' => 422, 'message' => 'Mật khẩu cũ không đúng']);
+                return response()->json(['code' => 422, 'message' => 'Mật khẩu cũ không đúng'], 422);
             }
         } 
 
         if ($request->pass_new != $request->pass_confirm) {
-            return response()->json(['code' => 422, 'message' => 'Mật khẩu xác nhận không trùng nhau']);
+            return response()->json(['code' => 422, 'message' => 'Mật khẩu xác nhận không trùng nhau'], 422);
         } else {
             Account::where('account_id', $account_token->user_id)->update(['loginPASS' => bcrypt($request->pass_new)]);
-            return response()->json(['code' => 200, 'message' => 'Thay đổi mật khẩu thành công']);
+            return response()->json(['code' => 200, 'message' => 'Thay đổi mật khẩu thành công'], 200);
         }
 
     }
@@ -214,6 +214,32 @@ class AccountController extends Controller
             return response()->json(['code' => 200, 'message' => 'Xóa thành công']);
         } else {
             return response()->json(['code' => 401, 'message' => 'Không tìm thấy']);
+        }
+    }
+
+    public function update(Request $request, $id){
+   
+
+        $account = Account::where('account_id',$id);
+
+        if($account->get()->count() == 0){
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
+
+        } else {
+            $account->update(['fullname' => $request->HoVaTen]);
+        }
+
+        $ql = Quanly::where('Mã Quản Lý',$id);
+        $gv = Giaovien::where('Mã Giáo Viên',$id);
+
+        if ($ql->get()->count() == 1){
+            $ql->update(['Họ Và Tên' => $request->HoVaTen, 'Số Điện Thoại' => $request->Sdt,
+             'Địa Chỉ' => $request->DiaChi, 'Email' => $request->Email, 'CMND' => $request->Cmnd]);
+             return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+        } else if ($gv->get()->count() == 1){
+            $ql->update(['Họ Và Tên' => $request->HoVaTen, 'Số Điện Thoại' => $request->Sdt,
+             'Địa Chỉ' => $request->DiaChi, 'Email' => $request->Email, 'CMND' => $request->Cmnd]);
+             return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         }
     }
 
