@@ -43,7 +43,7 @@ export default class Account extends Component {
       {id: 4, method: 'GET', url: '/api/logout', header: 'Authorization: Bearer <token>', params:'', json: '{\n "code": 200,\n "message": "Đăng xuất thành công"\n}', des: 'Đăng xuất'},
       {id: 5, method: 'GET', url: '/api/account', header: 'Authorization: Bearer <token>', params: '', json: '', des: 'Trả về thông tin của tài khoản'},
       {id: 6, method: 'POST', url: '/api/change_pass', header: 'Authorization: Bearer <token>', params: '{\n "pass_old"\n "pass_new"\n "pass_confirm"\n}', json: '{\n "code": 422,\n "message": "Mật khẩu cũ không đúng"\n}\n{\n "code": 422,\n "message": "Mật khẩu xác nhận không trùng nhau"\n}\n{\n "code": 200,\n "message": "Thay đổi mật khẩu thành công"\n}', des: 'Thay đổi mật khẩu'},
-      {id: 7, method: 'PUT', url: '/api/account/{account_id}', header: '', params: '{\n "HoVaTen"\n "Cmnd"\n "Sdt"\n "Email"\n "DiaChi"\n}', json: '{\n "code": 200,\n "message": "Cập nhật thành công"\n}\n', des: 'Cập nhật tài khoản'},
+      {id: 7, method: 'PUT', url: '/api/account',  header: 'Authorization: Bearer <token>', params: '{\n "HoVaTen"\n "Cmnd"\n "Sdt"\n "Email"\n "DiaChi"\n}', json: '{\n "code": 200,\n "message": "Cập nhật thành công"\n}\n', des: 'Cập nhật tài khoản'},
 
     ] 
   }

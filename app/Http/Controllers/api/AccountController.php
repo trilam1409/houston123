@@ -217,10 +217,18 @@ class AccountController extends Controller
         }
     }
 
-    public function update(Request $request, $id){
-   
+    public function update(Request $request){
+        $value = $request->bearerToken();
+        $id = (new Parser())->parse($value)->getHeader('jti');
+       
+        if (DB::table('oauth_access_tokens')->where('id',$id)->count() == 1){
+            $account_token = DB::table('oauth_access_tokens')->select('user_id', 'revoked')->where('id',$id)->first();
+        }
+        else{
+            return response()->json(['code' => 422, 'message' => 'Lần đăng nhập trước đã hết hạn'], 422);
+        }
 
-        $account = Account::where('account_id',$id);
+        $account = Account::where('account_id',$account_token->user_id);
 
         if($account->get()->count() == 0){
             return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
@@ -229,8 +237,8 @@ class AccountController extends Controller
             $account->update(['fullname' => $request->HoVaTen]);
         }
 
-        $ql = Quanly::where('Mã Quản Lý',$id);
-        $gv = Giaovien::where('Mã Giáo Viên',$id);
+        $ql = Quanly::where('Mã Quản Lý',$account_token->user_id);
+        $gv = Giaovien::where('Mã Giáo Viên',$account_token->user_id);
 
         if ($ql->get()->count() == 1){
             $ql->update(['Họ Và Tên' => $request->HoVaTen, 'Số Điện Thoại' => $request->Sdt,
@@ -242,6 +250,8 @@ class AccountController extends Controller
              return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         }
     }
+
+
 
 
     

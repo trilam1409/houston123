@@ -25,6 +25,7 @@ Route::group(['namespace' => 'api'], function () {
     Route::post('change_pass', 'AccountController@changePassword');
     Route::resource('account', 'AccountController');
     Route::post('upload', 'UploadImage@upload');
+    Route::put('account', 'AccountController@update');
     //Route::group(['middleware' => ['AuthenHouston']], function () {
         Route::resource('lophoc', 'LophocController');
         Route::resource('loaiql', 'LoaiquanlyController');
