@@ -245,7 +245,7 @@ class AccountController extends Controller
              'Địa Chỉ' => $request->DiaChi, 'Email' => $request->Email, 'CMND' => $request->Cmnd]);
              return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         } else if ($gv->get()->count() == 1){
-            $ql->update(['Họ Và Tên' => $request->HoVaTen, 'Số Điện Thoại' => $request->Sdt,
+            $gv->update(['Họ Và Tên' => $request->HoVaTen, 'Số Điện Thoại' => $request->Sdt,
              'Địa Chỉ' => $request->DiaChi, 'Email' => $request->Email, 'CMND' => $request->Cmnd]);
              return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
         }
