@@ -20,7 +20,7 @@ class MonhocController extends Controller
             $monhoc = Monhoc::paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($monhoc);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
         
     }
@@ -44,22 +44,41 @@ class MonhocController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'ma' => 'required|max:3',
+            'ma' => 'string',
             'ten' => 'required',
             'bophanquanly' => 'required'
         ]);
 
-        if (Monhoc::where('mamon',$request->ma)->get()->count() == 0){
+        
+        $id = strtoupper(substr($request->ten, 0, 2));
+        $name_count = Monhoc::where('name',$request->ten)->get()->count();
+        $id_count = Monhoc::where('mamon',$id)->get()->count();
+        if ($name_count == 1){
+            return response()->json(['code' => 422, 'message' => "Môn {$request->ten} đã tồn tại"], 422);
+        }
+        else if ($id_count == 1 && $request->ma == null){
+            return response()->json(['code' => 422, 'message' => "Mã {$id} đã tồn tại vui nhập mã môn"], 422);
+        }
+        else if ($name_count == 0 && $id_count == 0){
             $monhoc = new Monhoc([
-                'mamon' => $request->ma,
+                'mamon' => $id,
                 'name' => $request->ten,
                 'managerAllow' => $request->bophanquanly
             ]);
 
             $monhoc->save();
-            return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
-        } else {
-            return response()->json(['code' => 422, 'message' => 'Đã tồn tại'], 422);
+            //return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
+            return $this->show($id);
+        } else if($name_count == 0 && $id_count == 1 && $request->ma != null) {
+            $monhoc = new Monhoc([
+                'mamon' => strtoupper($request->ma),
+                'name' => $request->ten,
+                'managerAllow' => $request->bophanquanly
+            ]);
+
+            $monhoc->save();
+            //return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
+            return $this->show($request->ma);
         }
     }
 
@@ -78,7 +97,7 @@ class MonhocController extends Controller
             $monhoc = $monhoc->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($monhoc);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -103,13 +122,14 @@ class MonhocController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'ten' => 'required',
-            'bophanquanly' => 'required'
+            'ten' => 'string',
+            'bophanquanly' => 'string'
         ]);
         $monhoc = Monhoc::where('mamon',$id);
         if ($monhoc->get()->count() == 1){
             $monhoc->update(['name' => $request->ten,'managerAllow' => $request->bophanquanly]);
-            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            return $this->show($id);
         } else {
             return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         }

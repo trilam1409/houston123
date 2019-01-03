@@ -80,7 +80,7 @@ class PhonghocController extends Controller
             $result = $phonghoc->join('coso','phonghoc.branch','=','coso.Cơ Sở')->select('phonghoc.*','coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($result);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
 
 
@@ -117,7 +117,7 @@ class PhonghocController extends Controller
             return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else {
             Phonghoc::where('Mã Phòng Học',$id)->update(['Sức Chứa' => $request->succhua, 'Ghi Chú' => $request->ghichu]);
-            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            return $this->show($id);
         }
     }
 

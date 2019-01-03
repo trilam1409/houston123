@@ -69,7 +69,8 @@ class DanhsachlopController extends Controller
 
         $ds->save();
 
-        return response()->json(['code' => 200, 'message' => 'Tạo thành công'],200);
+        //return response()->json(['code' => 200, 'message' => 'Tạo thành công'],200);
+        return $this->show($request->malop);
     }
 
     /**
@@ -134,7 +135,8 @@ class DanhsachlopController extends Controller
                 'Mã Lớp Chuyển' => $request->malopchuyen,
                 'Thời Gian Chuyển' => $request->thoigianchuyen
             ]);
-            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'],200);
+            //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'],200);
+            return $this->show($id);
         }
         
     }

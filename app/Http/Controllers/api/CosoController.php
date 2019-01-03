@@ -54,7 +54,8 @@ class CosoController extends Controller
                 'Tên Cơ Sở' => $request->tencoso
             ]);
             $coso->save();
-            return response()->json(['code' => 200,'message' => 'Tạo thành công'], 200);
+            //return response()->json(['code' => 200,'message' => 'Tạo thành công'], 200);
+            return $this->show($request->macoso);
         } else {
             return response()->json(['code' => 422, 'message' => 'Mã cơ sở đã tồn tại'], 422);
         }
@@ -109,7 +110,8 @@ class CosoController extends Controller
             return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else{
             $coso->update(['Tên Cơ Sở' => $request->tencoso]);
-            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            return $this->show($id);
         }
     }
 

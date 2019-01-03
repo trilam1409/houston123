@@ -73,7 +73,8 @@ class LophocController extends Controller
 
          $lophoc->save();
 
-         return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
+         //return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
+         return $this->show($ma_lop);
     }
 
     /**
@@ -137,7 +138,8 @@ class LophocController extends Controller
             Lophoc::where('Mã Lớp', $id)->update(['Lớp' => $request->lop, 'Mã Môn Học' => $request->mamonhoc, 'Mã Giáo Viên' => $request->magiaovien, 
             'Ngày Bắt Đầu' => date("Y-m-d", strtotime($request->batdau)), 'Ngày Kết Thúc' => date("Y-m-d", strtotime($request->ketthuc)), 
             'branch' => $request->coso]);
-            return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+            return $this->show($id);
         }
     }
 

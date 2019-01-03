@@ -58,7 +58,8 @@ class LoaiquanlyController extends Controller
             ]);
             //'Default CoSo' not necessary
             $loaiql->save();
-            return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
+            //return response()->json(['code' => 200, 'message' => 'Tạo thành công'], 200);
+            return $this->show($request->loaiquanly);
         } else {
             return response()->json(['code' => 422, 'message' => 'Đã tồn tại'], 422);
         }
@@ -112,7 +113,8 @@ class LoaiquanlyController extends Controller
             return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
         } else {
             $loaiql->update(['Permission Allow' => $request->permission_allow, 'Permission' => $request->permission]);
-           return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+           //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
+           return $this->show($id);
         }
         
         

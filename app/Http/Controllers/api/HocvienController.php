@@ -92,7 +92,8 @@ class HocvienController extends Controller
         ]);
 
         $hocvien->save();
-        return response()->json('1', 200);
+        //return response()->json('1', 200);
+        return $this->show($id_new);
     }
 
     /**
