@@ -90,7 +90,7 @@ p {
     overflow: hidden;
     transition: all 0.3s linear; }
     .field-body .row.show {
-      max-height: 400px; }
+      max-height: 500px; }
   .field-body .views-col-1 {
     cursor: pointer; }
   .field-body .row:not(:last-child) {

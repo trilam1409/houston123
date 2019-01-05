@@ -61,8 +61,8 @@ class HocvienController extends Controller
             'tenNT2' => 'string',
             'ngheNT2' => 'string',
             'sdtNT2' => 'numeric',
-            'lydobietHouson' => 'string',
-            'chinhthuc' => 'numeric',
+            'lydobietHouson' => 'required|string',
+            'chinhthuc' => 'required|numeric',
             'coso' => 'required|string'
         ]);
 

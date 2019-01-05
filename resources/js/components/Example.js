@@ -125,7 +125,7 @@ export class HocVien extends Component {
     content: [
       {id: 1, method: 'GET', url: '/api/hocvien', header: '', params: '', json: '', des: 'Lấy toàn bộ'},
       {id: 2, method: 'GET', url: '/api/hocvien/{str}', header: '', params: '', json: '', des: 'Tìm kiếm'},
-      {id: 3, method: 'POST', url: '/api/hocvien', header: '', params: '{\n "hovaten"\n "hinhanh"\n "lop"\n "sdt"\n "diachi"\n "ngaysinh"\n "hoclucvao"\n" ngaynhaphoc"\n "truonghocchinh"\n "hohang"\n "tenNT1"\n "ngheNT1"\n "sdtNT1"\n "tenNT2"\n "ngheNT2"\n "sdtNT2"\n "lydobietHouston"\n "chinhthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới'},
+      {id: 3, method: 'POST', url: '/api/hocvien', header: '', params: '{\n "hovaten" **\n "hinhanh"\n "lop" **\n "sdt"\n "diachi"\n "ngaysinh"\n "hoclucvao"\n" ngaynhaphoc"\n "truonghocchinh"\n "hohang"\n "tenNT1"\n "ngheNT1"\n "sdtNT1"\n "tenNT2"\n "ngheNT2"\n "sdtNT2"\n "lydobietHouston" **\n "chinhthuc" **\n "coso" **\n}', json: '{\n"code": 200,\n"message": "Tạo thành công"\n}', des: 'Tạo mới'},
       //{id: 4, method: 'POST', url: '/api/hocvien{id}', header: '', params: '{\n "hovaten"\n "hinhanh"\n "lop"\n "sdt"\n "diachi"\n "ngaysinh"\n "hoclucvao"\n" ngaynhaphoc"\n "truonghocchinh"\n "hohang"\n "tenNT1"\n "ngheNT1"\n "sdtNT1"\n "tenNT2"\n "ngheNT2"\n "sdtNT2"\n "lydobietHouston"\n "chinhthuc"\n "coso"\n}', json: '{\n"code": 200,\n"message": "Cập nhật thành công"\n}', des: 'Cập nhật'},
       {id: 5, method: 'DELETE', url: '/api/hocvien/{id}', header: '', params: '', json: '{\n"code": 200,\n"message": "Xóa thành công"\n}', des: 'Xóa'},
     ] 
