@@ -156,4 +156,17 @@ class HocvienController extends Controller
         }
         
     }
+
+    
+    public function DataTraining(){
+     
+        if (Hocvien::get()->count() == 0){
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
+        } else {
+            $hocvien = Hocvien::select('Họ Và Tên', 'Lớp', 'Học Lực Đầu Vào', 'Biết Houston123 Như Thế Nào', 'Địa Chỉ')->paginate(30);
+            $custom = collect(['code' => 200]);
+            $data = $custom->merge($hocvien);
+            return response()->json($data, 200)->header('charset','utf8');
+        }
+    }
 }

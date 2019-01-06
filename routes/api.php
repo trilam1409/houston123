@@ -47,6 +47,8 @@ Route::group(['namespace' => 'api'], function () {
         
     //});
 
+    Route::get('data-training','HocvienController@DataTraining');
+
     Route::get('cskh-cu', 'SummaryController@CSKHcu');
     Route::get('call-hang-ngay', 'SummaryController@callHangNgay');
     Route::get('call-data', 'SummaryController@callData');

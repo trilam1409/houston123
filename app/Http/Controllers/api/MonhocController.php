@@ -92,7 +92,7 @@ class MonhocController extends Controller
     {   
         $monhoc = Monhoc::where('mamon','like','%'.$str.'%')->orwhere('name','like','%'.$str.'%')->orwhere('managerAllow','like','%'.$str.'%');
         if ($monhoc->get()->count() == 0) {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $monhoc = $monhoc->paginate(15);
             $custom = collect(['code' => 200]);

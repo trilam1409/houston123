@@ -253,18 +253,4 @@ class AccountController extends Controller
         }
     }
 
-
-
-
-    
-    public function test(){
-        $book = DB::table('giaovien')->paginate(3);
-
-        $custom = collect(['my_data' => 'My custom data here']);
-
-        $data = $custom->merge($book);
-
-        return response()->json($data);
-
-    }
 }
