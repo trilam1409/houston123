@@ -16,7 +16,7 @@ class DanhsachlopController extends Controller
     public function index()
     {
         if (Danhsachlop::get()->count() == 0 ){
-            return response()->json(['code' => 401], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $ds = Danhsachlop::join('users', 'danhsachhocsinhtronglop.User ID', '=', 'users.User ID')
             ->join('lophoc', 'danhsachhocsinhtronglop.Mã Lớp', '=', 'lophoc.Mã Lớp')
@@ -27,7 +27,7 @@ class DanhsachlopController extends Controller
             ->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($ds);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -83,7 +83,7 @@ class DanhsachlopController extends Controller
     {   
         $ds = Danhsachlop::where('danhsachhocsinhtronglop.User ID', 'like', '%'.$str.'%')->orwhere('danhsachhocsinhtronglop.Mã Lớp','like','%'.$str.'%');
         if ($ds->get()->count() == 0 ){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $ds = $ds->join('users', 'danhsachhocsinhtronglop.User ID', '=', 'users.User ID')
             ->join('lophoc', 'danhsachhocsinhtronglop.Mã Lớp', '=', 'lophoc.Mã Lớp')
@@ -94,7 +94,7 @@ class DanhsachlopController extends Controller
             ->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($ds);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -120,7 +120,7 @@ class DanhsachlopController extends Controller
     {   
         $ds = Danhsachlop::where('ID',$id);
         if ($ds->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {    
             $request->validate([
                 'mahocvien' => 'required|string',
@@ -151,7 +151,7 @@ class DanhsachlopController extends Controller
     {
         $ds = Danhsachlop::where('ID',$id);
         if ($ds->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {    
             $ds->delete();
             return response()->json(['code' => 200, 'message' => 'Xóa thành công'],200);
@@ -161,7 +161,7 @@ class DanhsachlopController extends Controller
     public function classNullStudent($id){
         $lophoc = Danhsachlop::where('User ID','!=' ,$id);
         if ($lophoc->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy lớp']);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy lớp'], 200);
         } else {
             $lophoc = $lophoc->groupBy('danhsachhocsinhtronglop.Mã Lớp')
             ->join('lophoc','danhsachhocsinhtronglop.Mã Lớp','=','lophoc.Mã Lớp')
@@ -171,7 +171,7 @@ class DanhsachlopController extends Controller
             ->select('lophoc.*', 'coso.Tên Cơ Sở','danhsachmonhoc.name','giaovien.Họ Và Tên')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($lophoc);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 

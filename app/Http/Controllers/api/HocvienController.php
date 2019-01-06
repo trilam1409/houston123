@@ -16,12 +16,12 @@ class HocvienController extends Controller
     public function index()
     {   
         if (Hocvien::get()->count() == 0) {
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $hocvien = Hocvien::join('coso', 'users.Cơ Sở', '=', 'coso.Cơ Sở')->select('users.*', 'coso.Tên Cơ Sở')->paginate(30);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($hocvien);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
         
     }
@@ -106,12 +106,12 @@ class HocvienController extends Controller
     {   
         $hocvien = Hocvien::where('User ID','like','%'.$str.'%')->orwhere('Họ Và Tên', 'like','%'.$str.'%')->orwhere('users.Cơ Sở','like','%'.$str.'%');
         if ($hocvien->get()->count() == 0) {
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $result = $hocvien->join('coso', 'users.Cơ Sở', '=', 'coso.Cơ Sở')->select('users.*', 'coso.Tên Cơ Sở')->paginate(30);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($result);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -147,12 +147,12 @@ class HocvienController extends Controller
     public function destroy($id)
     {   
         $hocvien = Hocvien::where('User ID', $id);
-        if($hociven->count() == 0){
-            return response()->json(['code', 401, 'message' => 'Không tìm thấy'],401);
+        if($hocvien->count() == 0){
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'],200);
             
         } else {
-            $hociven->delete();
-            return response()->json(['code', 200, 'message' => 'Xóa thành công'],200);
+            $hocvien->delete();
+            return response()->json(['code' => 200, 'message' => 'Xóa thành công'],200);
         }
         
     }

@@ -15,12 +15,12 @@ class CosoController extends Controller
     public function index()
     {   
         if (Coso::get()->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $coso = Coso::paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($coso);
-            return response()->json($data)->header('charset', 'utf-8')->header('Access-Control-Allow-Origin', '*');
+            return response()->json($data, 200)->header('charset', 'utf-8')->header('Access-Control-Allow-Origin', '*');
         }
         
     }
@@ -73,11 +73,11 @@ class CosoController extends Controller
     {   
         $coso = Coso::where('Cơ Sở','like','%'.$str.'%')->orwhere('Tên Cơ Sở','like','%'.$str.'%');
         if($coso->count() == 0){
-            return response()->json(['code' => 401],401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $custom = collect(['code' => 200]);
             $data = $custom->merge($coso->paginate(15));
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -107,7 +107,7 @@ class CosoController extends Controller
         $coso = Coso::where('Cơ Sở', $id);
 
         if($coso->count() == 0){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else{
             $coso->update(['Tên Cơ Sở' => $request->tencoso]);
             //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
@@ -125,7 +125,7 @@ class CosoController extends Controller
     {
         $coso = Coso::where('Cơ Sở', $id);
         if($coso->count() == 0){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else{
             $coso->delete();
             return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);

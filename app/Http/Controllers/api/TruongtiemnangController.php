@@ -15,12 +15,12 @@ class TruongtiemnangController extends Controller
     public function index()
     {   
         if (Truongtiemnang::get()->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401],200);
         } else {
             $truong = Truongtiemnang::join('coso', 'truongtiemnang.Cơ Sở','=','coso.Cơ Sở')->select('truongtiemnang.*', 'coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($truong);
-            return response()->json($data)->header('charser','utf-8');
+            return response()->json($data,200)->header('charser','utf-8');
         }
         
     }
@@ -74,12 +74,12 @@ class TruongtiemnangController extends Controller
     {   
         $truong = Truongtiemnang::where('ID','like','%'.$str.'%')->orwhere('Tên Trường','like','%'.$str.'%')->orwhere('truongtiemnang.Cơ Sở', 'like', '%'.$str.'%');
         if ($truong->get()->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => "Không tìm thấy"], 200);
         } else {
             $truong = $truong->join('coso', 'truongtiemnang.Cơ Sở','=','coso.Cơ Sở')->select('truongtiemnang.*', 'coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($truong);
-            return response()->json($data)->header('charser','utf-8');
+            return response()->json($data, 200)->header('charser','utf-8');
         }
     }
 
@@ -111,7 +111,7 @@ class TruongtiemnangController extends Controller
 
         $truong = Truongtiemnang::where('ID', $id);
         if ($truong->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'messsage' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'messsage' => 'Không tìm thấy'], 200);
         } else {
             $truong->update(['Tên Trường' => $request->ten, 'Địa Điểm' => $request->diadiem, 'Cơ Sở' => $request->coso]);
             //return response()->json(['code' => 200, 'messsage' => 'Cập nhật thành công'], 200);
@@ -129,7 +129,7 @@ class TruongtiemnangController extends Controller
     {
         $truong = Truongtiemnang::where('ID', $id);
         if ($truong->get()->count() == 0 ){
-            return response()->json(['code' => 401, 'messsage' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'messsage' => 'Không tìm thấy'], 200);
         } else {
             $truong->delete();
             return response()->json(['code' => 200, 'messsage' => 'Xóa thành công'], 200);

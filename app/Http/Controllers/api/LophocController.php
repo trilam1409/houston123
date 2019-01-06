@@ -16,7 +16,7 @@ class LophocController extends Controller
     public function index()
     {   
         if (Lophoc::get()->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'],200);
         } else {
             $lophoc = Lophoc::join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
             ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
@@ -24,7 +24,7 @@ class LophocController extends Controller
             'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($lophoc);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }     
     }
 
@@ -95,11 +95,11 @@ class LophocController extends Controller
         'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
      
         if ($lophoc->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $custom = collect(['code' => 200]);
             $data = $custom->merge($result);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -133,7 +133,7 @@ class LophocController extends Controller
         ]);
 
         if (Lophoc::where('Mã Lớp', $id)->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             Lophoc::where('Mã Lớp', $id)->update(['Lớp' => $request->lop, 'Mã Môn Học' => $request->mamonhoc, 'Mã Giáo Viên' => $request->magiaovien, 
             'Ngày Bắt Đầu' => date("Y-m-d", strtotime($request->batdau)), 'Ngày Kết Thúc' => date("Y-m-d", strtotime($request->ketthuc)), 
@@ -153,7 +153,7 @@ class LophocController extends Controller
     {   
         $lophoc = Lophoc::where('Mã Lớp', $id);
         if ($lophoc->count() == 0){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $lophoc->delete();
             return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);
@@ -163,7 +163,7 @@ class LophocController extends Controller
     public function classNullTeacher($id){
         $lophoc = Lophoc::where('lophoc.Mã Giáo Viên','!=' ,$id);
         if ($lophoc->count() == 0 ){
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy lớp']);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy lớp'], 200);
         } else {
             $lophoc = $lophoc->join('danhsachmonhoc', 'lophoc.Mã Môn Học', '=', 'danhsachmonhoc.mamon')->join('giaovien', 'lophoc.Mã Giáo Viên', '=', 'giaovien.Mã Giáo Viên')
             ->join('coso', 'lophoc.branch', '=', 'coso.Cơ Sở')
@@ -171,7 +171,7 @@ class LophocController extends Controller
             'Ngày Bắt Đầu', 'Ngày Kết Thúc', 'branch', 'coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($lophoc);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 }

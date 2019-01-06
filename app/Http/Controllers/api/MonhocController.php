@@ -131,7 +131,7 @@ class MonhocController extends Controller
             //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
             return $this->show($id);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         }
     }
 
@@ -148,7 +148,7 @@ class MonhocController extends Controller
             $monhoc->delete();
             return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         }
     }
 }

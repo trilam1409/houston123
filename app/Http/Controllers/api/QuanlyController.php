@@ -17,12 +17,12 @@ class QuanlyController extends Controller
     {   
  
         if(Quanly::get()->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'],200);
        } else{
             $result = Quanly::join('coso', 'quanly.Cơ Sở', '=', 'coso.Cơ Sở')->select('quanly.*', 'coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($result);
-            return response()->json($data)->header('charset', 'utf-8');
+            return response()->json($data, 200)->header('charset', 'utf-8');
        }
         
   
@@ -60,12 +60,12 @@ class QuanlyController extends Controller
        $quanly = Quanly::where('Mã Quản Lý','like','%'.$str.'%')->orWhere('Họ Và Tên','like','%'.$str.'%')->orWhere('quanly.Cơ Sở','like','%'.$str.'%');
   
        if($quanly->get()->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
        } else{
             $result = $quanly->join('coso', 'quanly.Cơ Sở', '=', 'coso.Cơ Sở')->select('quanly.*', 'coso.Tên Cơ Sở')->paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($result);
-            return response()->json($data)->header('charset', 'utf-8');
+            return response()->json($data, 200)->header('charset', 'utf-8');
        }
     }
 
@@ -115,7 +115,7 @@ class QuanlyController extends Controller
         return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
 
         } else {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         }
 
        
@@ -131,7 +131,7 @@ class QuanlyController extends Controller
     {   
         $exist = Quanly::where('Mã Quản Lý',$id)->count();
         if ($exist == 0){
-            return response()->json(['code' => 401, 'message' => "Không tìm thấy"], 401);
+            return response()->json(['code' => 401, 'message' => "Không tìm thấy"], 200);
         } else if ($exist == 1){
             Quanly::where('Mã Quản Lý',$id)->delete();
             Account::where('account_id', $id)->delete();

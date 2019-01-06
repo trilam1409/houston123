@@ -211,9 +211,9 @@ class AccountController extends Controller
             $account->delete();
             Quanly::where('Mã Quản Lý',$id)->delete();
             Giaovien::where('Mã Giáo Viên',$id)->delete();
-            return response()->json(['code' => 200, 'message' => 'Xóa thành công']);
+            return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);
         } else {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy']);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         }
     }
 

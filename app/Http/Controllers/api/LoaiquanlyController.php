@@ -15,12 +15,12 @@ class LoaiquanlyController extends Controller
     public function index()
     {   
         if (Loaiquanly::get()->count() == 0 ){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $loaiql = Loaiquanly::paginate(15);
             $custom = collect(['code' => 200]);
             $data = $custom->merge($loaiql);
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
         
     }
@@ -76,11 +76,11 @@ class LoaiquanlyController extends Controller
     {
         $loaiql = Loaiquanly::where('Loại Quản Lý','like','%'.$str.'%')->orwhere('Permission','like','%'.$str.'%');
         if ($loaiql->count() == 0){
-            return response()->json(['code' => 401]);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $custom = collect(['code' => 200]);
             $data = $custom->merge($loaiql->paginate(15));
-            return response()->json($data)->header('charset','utf-8');
+            return response()->json($data, 200)->header('charset','utf-8');
         }
     }
 
@@ -110,7 +110,7 @@ class LoaiquanlyController extends Controller
         ]);
         $loaiql = Loaiquanly::where('Loại Quản Lý', $id);
         if ($loaiql->count() == 0) {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $loaiql->update(['Permission Allow' => $request->permission_allow, 'Permission' => $request->permission]);
            //return response()->json(['code' => 200, 'message' => 'Cập nhật thành công'], 200);
@@ -130,7 +130,7 @@ class LoaiquanlyController extends Controller
     {   
         $loaiql = Loaiquanly::where('Loại Quản Lý', $id);
         if ($loaiql->count() == 0) {
-            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 401);
+            return response()->json(['code' => 401, 'message' => 'Không tìm thấy'], 200);
         } else {
             $loaiql->delete();
            return response()->json(['code' => 200, 'message' => 'Xóa thành công'], 200);
